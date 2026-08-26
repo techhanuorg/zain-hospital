@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  careos-web:
+    build: .
+    container_name: careos_hospital_whatsapp_os
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DEFAULT_HOSPITAL_ID=hosp_apex_01
+    env_file:
+      - .env.local
+    volumes:
+      - ./data_store.json:/app/data_store.json
