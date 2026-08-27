@@ -9,3 +9,5 @@ dist/
 .env.*.local
 *.pem
 .DS_Store
+data/baileys_auth/
+baileys_auth/

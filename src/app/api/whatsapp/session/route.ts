@@ -1,24 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sessionManager } from '@/lib/whatsapp/session-manager';
+import { baileysManager } from '@/lib/whatsapp/baileys-manager';
 
 export async function GET() {
-  const session = sessionManager.getSessionInfo();
-  return NextResponse.json(session);
+  try {
+    const session = baileysManager.getSessionInfo();
+    return NextResponse.json(session);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const { action } = await req.json();
-  if (action === 'refresh_qr') {
-    const qr = sessionManager.refreshQR();
-    return NextResponse.json({ status: 'QR_REQUIRED', qrCode: qr });
+  try {
+    const body = await req.json();
+    const { action, phone, message } = body;
+
+    if (action === 'refresh_qr' || action === 'start' || action === 'init') {
+      const res = await baileysManager.refreshQR();
+      return NextResponse.json(res);
+    }
+
+    if (action === 'reconnect') {
+      await baileysManager.reconnect();
+      return NextResponse.json({ status: 'CONNECTING' });
+    }
+
+    if (action === 'disconnect') {
+      await baileysManager.disconnect();
+      return NextResponse.json({ status: 'DISCONNECTED' });
+    }
+
+    if (action === 'logout') {
+      await baileysManager.logout();
+      return NextResponse.json({ status: 'DISCONNECTED' });
+    }
+
+    if (action === 'send_test') {
+      if (!phone || !message) {
+        return NextResponse.json({ error: 'Phone number and test message are required' }, { status: 400 });
+      }
+      const result = await baileysManager.sendMessage(phone, message);
+      return NextResponse.json(result);
+    }
+
+    return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
+  } catch (err: any) {
+    console.error('[API /whatsapp/session] Error:', err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
-  if (action === 'reconnect') {
-    sessionManager.reconnect();
-    return NextResponse.json({ status: 'CONNECTING' });
-  }
-  if (action === 'disconnect') {
-    sessionManager.disconnect();
-    return NextResponse.json({ status: 'DISCONNECTED' });
-  }
-  return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
 }

@@ -7,6 +7,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    serverComponentsExternalPackages: ['@whiskeysockets/baileys', 'pino', 'qrcode'],
+  },
 };
 
 export default nextConfig;
