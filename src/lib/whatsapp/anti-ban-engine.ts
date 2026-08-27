@@ -61,17 +61,17 @@ export class AntiBanEngine {
     'Namaskar 🙏',
     'Hello 😊',
     'Pranam 🙏',
-    'Greetings from Apex Hospital 🏥',
+    'Greetings from Jain Hospital Bahraich 🏥',
     'Namaste ji 🙏'
   ];
 
   // Closing Spintax dictionary
   private closingVariants: string[] = [
-    '\n\n— Apex Super Speciality Hospital Team',
+    '\n\n— Jain Hospital Bahraich Team',
     '\n\n— CareOS Digital Reception Desk',
-    '\n\n— Apex Hospital Support Desk 🙏',
+    '\n\n— Jain Hospital Support Desk 🙏',
     '\n\n— Aapka Swasthya, Hamari Prathmikta 🏥',
-    '\n\n— Apex Care Team'
+    '\n\n— Jain Care Team'
   ];
 
   constructor() {
@@ -166,7 +166,7 @@ export class AntiBanEngine {
     // If bulk/broadcast, add randomized subtle polite footer or zero-width variations
     if (isBroadcast) {
       const randomClosing = this.closingVariants[Math.floor(Math.random() * this.closingVariants.length)];
-      if (!modified.includes('Apex')) {
+      if (!modified.includes('Jain')) {
         modified += randomClosing;
       }
       // Add subtle micro-timestamp marker at bottom for absolute message uniqueness

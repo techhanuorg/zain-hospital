@@ -58,7 +58,7 @@ export default function OverviewDashboard() {
           <span className="bg-teal-500/20 text-teal-300 text-xs font-semibold px-2.5 py-1 rounded-full border border-teal-500/30 mb-2 inline-block">
             AI Reception Desk Online
           </span>
-          <h1 className="text-2xl font-bold tracking-tight">Apex Hospital WhatsApp Command Center</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Jain Hospital Bahraich — WhatsApp Command Center</h1>
           <p className="text-slate-300 text-sm mt-1 max-w-2xl">
             Autonomous multi-lingual WhatsApp reception handling appointments, Hindi/Hinglish NLP, messy input normalization, real-time slots, and medicine follow-up reminders.
           </p>

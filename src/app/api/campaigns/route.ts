@@ -4,7 +4,7 @@ import { campaignDispatcher } from '@/lib/whatsapp/campaign-dispatcher';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const hospitalId = searchParams.get('hospitalId') || 'hosp_apex_01';
+  const hospitalId = searchParams.get('hospitalId') || 'hosp_jain_01';
   const campaigns = await campaignRepo.listByHospital(hospitalId);
   const activeStatuses = campaignDispatcher.getAllStatuses();
   return NextResponse.json({ campaigns, activeStatuses });
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { action, campaignId, hospitalId = 'hosp_apex_01' } = body;
+    const { action, campaignId, hospitalId = 'hosp_jain_01' } = body;
 
     // Action to safely launch campaign with anti-ban pacing
     if (action === 'launch') {

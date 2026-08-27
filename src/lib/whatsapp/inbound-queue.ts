@@ -84,7 +84,7 @@ export class InboundQueueEngine {
     messageId: string,
     userPhone: string,
     rawText: string,
-    hospitalId: string = 'hosp_apex_01'
+    hospitalId: string = 'hosp_jain_01'
   ): { status: 'QUEUED' | 'DROPPED_DUPLICATE' | 'DROPPED_OVERFLOW'; jobId?: string } {
     // 1. Ultra-fast Deduplication
     if (messageDeduplicator.isDuplicate(messageId)) {
@@ -227,7 +227,7 @@ export class InboundQueueEngine {
 
     if (queueDepth > 5000 && job.priority !== 'CRITICAL') {
       this.fastPathReplyCount++;
-      replyText = `Namaste! Apex Hospital me aapka sandesh mil gaya hai. Hamare digital system dwara aapka anurodh process ho raha hai 🙏`;
+      replyText = `Namaste! Jain Hospital Bahraich me aapka sandesh mil gaya hai. Hamare digital system dwara aapka anurodh process ho raha hai 🙏`;
     } else {
       // Standard AI Orchestration
       const aiResult = await AIOrchestrator.processMessage(rawText, userPhone, hospitalId);

@@ -4,7 +4,7 @@ import { SlotEngine } from '@/lib/engine/slot-engine';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const hospitalId = searchParams.get('hospitalId') || 'hosp_apex_01';
+  const hospitalId = searchParams.get('hospitalId') || 'hosp_jain_01';
   const doctorId = searchParams.get('doctorId') || undefined;
   const date = searchParams.get('date') || undefined;
   const status = searchParams.get('status') || undefined;
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const hospitalId = body.hospitalId || 'hosp_apex_01';
+    const hospitalId = body.hospitalId || 'hosp_jain_01';
 
     const locked = await SlotEngine.lockSlot(hospitalId, body.doctorId, body.appointmentDate, body.appointmentTime);
     if (!locked) {

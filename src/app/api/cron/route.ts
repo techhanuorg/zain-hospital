@@ -5,7 +5,7 @@ import { ModularWhatsAppClient } from '@/lib/whatsapp/client';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const hospitalId = searchParams.get('hospitalId') || 'hosp_apex_01';
+  const hospitalId = searchParams.get('hospitalId') || 'hosp_jain_01';
 
   // 1. Process 24h and 2h reminders
   const reminders = await ReminderEngine.processAppointmentReminders(hospitalId);

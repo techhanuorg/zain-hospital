@@ -22,7 +22,7 @@ export class BaileysManager {
   private qrDataUrl: string | null = null;
   private connectedNumber: string | null = null;
   private connectedSince: string | null = null;
-  private instanceName: string = 'Apex-CareOS-WhatsApp';
+  private instanceName: string = 'Jain-CareOS-WhatsApp';
   private isInitializing: boolean = false;
   private reconnectTimeout: NodeJS.Timeout | null = null;
   private lastPing: string = new Date().toISOString();
@@ -200,7 +200,7 @@ export class BaileysManager {
 
           const rawPhone = remoteJid.split('@')[0].replace(/[^0-9]/g, '');
           const userPhone = rawPhone.startsWith('+') ? rawPhone : `+${rawPhone}`;
-          const hospitalId = 'hosp_apex_01';
+          const hospitalId = 'hosp_jain_01';
 
           // Enqueue instantly into High-Scale Inbound Queue (< 1ms execution)
           inboundQueueEngine.enqueue(messageId, userPhone, messageText, hospitalId);

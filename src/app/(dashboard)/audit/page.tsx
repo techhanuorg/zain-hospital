@@ -10,7 +10,7 @@ export default function AuditPage() {
       action: 'CREATE_APPOINTMENT',
       entity_type: 'APPOINTMENT',
       entity_id: 'APP-98421',
-      user_name: 'Apex AI Orchestrator',
+      user_name: 'Jain AI Orchestrator',
       details: { doctor: 'Dr. Rahul Sharma', slot: '2026-08-27 18:00' },
       timestamp: '2026-08-25T14:22:02Z'
     },
@@ -19,7 +19,7 @@ export default function AuditPage() {
       action: 'EXECUTE_TOOL',
       entity_type: 'TOOL',
       entity_id: 'create_appointment',
-      user_name: 'Apex AI Orchestrator',
+      user_name: 'Jain AI Orchestrator',
       details: { slot_locked: true, validation_passed: true },
       timestamp: '2026-08-25T14:22:01Z'
     }

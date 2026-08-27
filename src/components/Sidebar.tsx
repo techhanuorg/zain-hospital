@@ -92,9 +92,9 @@ export default function Sidebar() {
       <div className="p-3 border-t border-slate-800 bg-slate-950/60 text-[11px]">
         <div className="flex items-center justify-between mb-1">
           <span className="text-slate-400 font-medium">Tenant ID:</span>
-          <span className="font-mono text-teal-400 text-[10px]">hosp_apex_01</span>
+          <span className="font-mono text-teal-400 text-[10px]">hosp_jain_01</span>
         </div>
-        <div className="text-slate-300 font-semibold truncate">Apex Super Speciality</div>
+        <div className="text-slate-300 font-semibold truncate">Jain Hospital Bahraich</div>
         <div className="text-slate-500 text-[10px] flex items-center gap-1.5 mt-1">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>WhatsApp Live & Connected</span>

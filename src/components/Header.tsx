@@ -33,12 +33,12 @@ export default function Header() {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-bold text-slate-800">Apex Super Speciality & Research Hospital</h2>
+            <h2 className="text-sm font-bold text-slate-800">Jain Hospital & Research Centre</h2>
             <span className="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live Node
             </span>
           </div>
-          <p className="text-xs text-slate-500">Dwarka Sector 12, New Delhi • Emergency 24x7</p>
+          <p className="text-xs text-slate-500">Basheerganj, Bahraich (U.P.) • Emergency 24x7</p>
         </div>
       </div>
 

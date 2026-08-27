@@ -4,7 +4,7 @@ import { conversationRepo } from '@/lib/storage/repositories';
 
 export async function POST(req: NextRequest) {
   try {
-    const { phone, text, conversationId, hospitalId = 'hosp_apex_01' } = await req.json();
+    const { phone, text, conversationId, hospitalId = 'hosp_jain_01' } = await req.json();
     if (!phone || !text) {
       return NextResponse.json({ error: 'Phone and text are required' }, { status: 400 });
     }

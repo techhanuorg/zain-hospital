@@ -15,6 +15,6 @@ export class WhatsAppTemplateFormatter {
       `⏰ *Time:* ${details.time}\n` +
       `🔖 *Appointment ID:* ${details.appointmentId}\n\n` +
       `Kripya 10–15 minutes pehle OPD reception par report karein.\n` +
-      `📍 Apex Super Speciality Hospital, Sector 12 Dwarka`;
+      `📍 Jain Hospital, Jain Mandir Road, Basheerganj, Bahraich (U.P.)`;
   }
 }

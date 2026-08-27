@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DEFAULT_HOSPITAL_ID=hosp_apex_01
+      - DEFAULT_HOSPITAL_ID=hosp_jain_01
     env_file:
       - .env.local
     volumes:

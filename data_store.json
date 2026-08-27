@@ -1,59 +1,58 @@
 {
   "hospitals": {
-    "hosp_apex_01": {
-      "hospital_id": "hosp_apex_01",
-      "name": "Apex Super Speciality & Research Hospital",
-      "tagline": "World-Class Healthcare with Compassion & AI Care",
-      "phone": "+91 11 4988 2000",
-      "emergency_phone": "+91 11 4988 2911",
+    "hosp_jain_01": {
+      "hospital_id": "hosp_jain_01",
+      "name": "Jain Hospital & Research Centre",
+      "tagline": "Leading Multispeciality Hospital in Bahraich with 24x7 Emergency & AI Care",
+      "phone": "+91 5252 232000",
+      "emergency_phone": "+91 5252 232911",
       "whatsapp_number": "+91 98110 54321",
-      "email": "care@apexhospital.org",
-      "address": "Plot 4, Sector 12, Dwarka, Near Metro Pillar 412",
-      "city": "New Delhi",
-      "state": "Delhi NCR",
-      "pincode": "110075",
-      "google_maps_url": "https://maps.google.com/?q=Apex+Hospital+Dwarka",
+      "email": "care@jainhospitalbahraich.com",
+      "address": "Jain Mandir Road, Basheerganj",
+      "city": "Bahraich",
+      "state": "Uttar Pradesh",
+      "pincode": "271801",
+      "google_maps_url": "https://maps.google.com/?q=Jain+Hospital+Bahraich+Uttar+Pradesh",
       "opd_timings": "Monday to Saturday: 8:30 AM – 7:30 PM | Sunday: 9:00 AM – 1:00 PM (Emergency 24x7)",
       "visiting_hours": "IPD Visiting: 4:30 PM – 7:00 PM (Max 2 visitors per patient)",
       "emergency_available_247": true,
       "facilities": [
-        "24x7 Emergency & Trauma Center",
-        "Advanced Cardiac Cath Lab",
-        "Level III Neonatal & Paediatric ICU",
-        "Modern Modular Operation Theatres (6 OT)",
-        "24x7 In-House NABL Accredited Pathology & Diagnostics",
-        "128 Slice Dual Energy CT Scanner & 3.0 Tesla Silent MRI",
-        "24x7 In-House Pharmacy with Home Delivery",
-        "Advanced Physiotherapy & Neuro-Rehabilitation Center",
-        "Free Valet Parking & Wheelchair Assistance"
+        "24x7 Emergency & Trauma Care Unit",
+        "Advanced Intensive Care Unit (ICU / NICU)",
+        "Modern Modular Operation Theatres",
+        "In-House Digital X-Ray, Pathology & Diagnostics",
+        "Complete ENT & Paediatrics Speciality Care",
+        "Maternity, Normal & Caesarean Delivery Wing",
+        "24x7 In-House Pharmacy with Local Delivery",
+        "Advanced General Surgery & Orthopaedics",
+        "Ambulance Services & Wheelchair Facility"
       ],
       "insurance_supported": [
+        "Ayushman Bharat (PM-JAY)",
         "Star Health",
         "HDFC ERGO",
         "ICICI Lombard",
         "Care Health Insurance",
-        "Max Bupa / Niva Bupa",
+        "Niva Bupa",
         "Bajaj Allianz",
-        "CGHS",
-        "ECHS",
-        "Ayushman Bharat (PM-JAY)"
+        "UP State Health Scheme"
       ],
       "faqs": [
         {
           "question": "OPD appointment kaise book karein?",
-          "answer": "Aap seedhe is WhatsApp par doctor ka naam, department ya apni problem likh kar bhej sakte hain. AI assistant aapko available time slots dikha kar turant book kar dega."
+          "answer": "Aap seedhe is WhatsApp par doctor ka naam, department ya apni bimari/problem likh kar bhej sakte hain. Hamara AI assistant aapko available time slots dikha kar turant book kar dega."
         },
         {
           "question": "Emergency me kya karein?",
-          "answer": "Emergency ke liye turant hamare 24x7 helpline +91 11 4988 2911 par call karein ya gate number 1 ke Emergency ward me sidhe aayein. Ambulance service bhi available hai."
+          "answer": "Emergency ke liye turant hamare 24x7 helpline +91 5252 232911 par call karein ya seedhe Jain Mandir Road, Basheerganj, Bahraich sthit Emergency ward me aayein. Ambulance uplabdh hai."
         },
         {
-          "question": "Reports online kaise milengi?",
-          "answer": "Test hone ke 4 se 6 ghante baad aapki NABL report is WhatsApp number par PDF format me automatically bhej di jayegi."
+          "question": "Reports WhatsApp par kaise milengi?",
+          "answer": "Test hone ke 4 se 6 ghante baad aapki diagnostic/pathology report is WhatsApp number par PDF format me automatically bhej di jayegi."
         },
         {
-          "question": "Cashless Mediclaim available hai kya?",
-          "answer": "Haan, hamare yahan sabhi major TPA aur Insurance companies (Star, HDFC, ICICI, Niva Bupa, CGHS, PM-JAY) ke cashless admissions ki suvidha uplabdh hai."
+          "question": "Ayushman Bharat Card chalta hai kya?",
+          "answer": "Haan, hamare yahan Ayushman Bharat (PM-JAY) aur sabhi major TPA insurance companies ke cashless elaj ki suvidha uplabdh hai."
         }
       ],
       "timezone": "Asia/Kolkata",
@@ -64,7 +63,7 @@
   "departments": [
     {
       "department_id": "dept_cardio",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Cardiology",
       "name_hindi": "हृदय रोग विभाग (दिल के डॉक्टर)",
       "description": "Comprehensive heart care, Angiography, Angioplasty, Pacemaker, ECG & Echo.",
@@ -75,7 +74,7 @@
     },
     {
       "department_id": "dept_ortho",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Orthopaedics",
       "name_hindi": "हड्डी एवं जोड़ रोग विभाग",
       "description": "Joint Replacement, Spine surgery, Fracture care, Arthroscopy & Sports Injuries.",
@@ -86,7 +85,7 @@
     },
     {
       "department_id": "dept_genmed",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "General Medicine",
       "name_hindi": "सामान्य चिकित्सा (बुखार, शुगर, बीपी)",
       "description": "Fever, Diabetes, Hypertension, Thyroid, Infections, Preventive checkups.",
@@ -97,7 +96,7 @@
     },
     {
       "department_id": "dept_gynae",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Gynaecology & Obstetrics",
       "name_hindi": "स्त्री एवं प्रसूति रोग विभाग",
       "description": "Maternity care, High-risk pregnancy, Infertility, PCOD/PCOS & Laparoscopic surgery.",
@@ -108,7 +107,7 @@
     },
     {
       "department_id": "dept_paed",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Paediatrics",
       "name_hindi": "शिशु एवं बाल रोग विभाग",
       "description": "Child growth monitoring, Vaccinations, Neonatal care, Childhood infections.",
@@ -119,7 +118,7 @@
     },
     {
       "department_id": "dept_ent",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "ENT (Ear, Nose, Throat)",
       "name_hindi": "कान, नाक एवं गला रोग विभाग",
       "description": "Sinus surgery, Hearing issues, Tonsillectomy, Voice disorders, Vertigo management.",
@@ -130,7 +129,7 @@
     },
     {
       "department_id": "dept_derma",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Dermatology",
       "name_hindi": "त्वचा एवं सौंदर्य रोग विभाग",
       "description": "Skin allergies, Acne, Eczema, Psoriasis, Hair fall, Laser treatments.",
@@ -141,7 +140,7 @@
     },
     {
       "department_id": "dept_neuro",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Neurology",
       "name_hindi": "मस्तिष्क एवं नस रोग विभाग",
       "description": "Migraine, Stroke, Epilepsy, Neuropathy, Parkinson’s, Memory disorders.",
@@ -154,7 +153,7 @@
   "doctors": [
     {
       "doctor_id": "doc_sharma_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "doctor_name": "Dr. Rahul Sharma",
       "specialization": "Senior Consultant Interventional Cardiologist",
       "department_id": "dept_cardio",
@@ -184,7 +183,7 @@
     },
     {
       "doctor_id": "doc_verma_02",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "doctor_name": "Dr. Priya Verma",
       "specialization": "Associate Consultant Cardiologist",
       "department_id": "dept_cardio",
@@ -212,7 +211,7 @@
     },
     {
       "doctor_id": "doc_gupta_03",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "doctor_name": "Dr. Anil Gupta",
       "specialization": "Chief Orthopaedic & Robotic Joint Surgeon",
       "department_id": "dept_ortho",
@@ -240,7 +239,7 @@
     },
     {
       "doctor_id": "doc_mehta_04",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "doctor_name": "Dr. Sunita Mehta",
       "specialization": "Senior Consultant Gynaecologist & Obstetrician",
       "department_id": "dept_gynae",
@@ -270,7 +269,7 @@
     },
     {
       "doctor_id": "doc_kapoor_05",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "doctor_name": "Dr. Rajesh Kapoor",
       "specialization": "Senior Consultant Physician & Diabetologist",
       "department_id": "dept_genmed",
@@ -302,13 +301,13 @@
   "patients": [
     {
       "patient_id": "pat_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "whatsapp_number": "+919876543210",
       "name": "Ramesh Singh",
       "gender": "Male",
       "dob": "1984-05-12",
       "age": 42,
-      "address": "B-142, Palam Extension, Sector 7 Dwarka, Delhi",
+      "address": "Civil Lines, Near Water Tank, Bahraich, Uttar Pradesh",
       "emergency_contact": "+91 98765 00001 (Wife)",
       "preferred_language": "hinglish",
       "consent_status": true,
@@ -326,7 +325,7 @@
     },
     {
       "patient_id": "pat_sunita_02",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "whatsapp_number": "+919811122233",
       "name": "Sunita Devi",
       "gender": "Female",
@@ -350,7 +349,7 @@
   "appointments": [
     {
       "appointment_id": "APP-98421",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "patient_id": "pat_ramesh_01",
       "doctor_id": "doc_sharma_01",
       "department_id": "dept_cardio",
@@ -371,7 +370,7 @@
     },
     {
       "appointment_id": "APP-98310",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "patient_id": "pat_sunita_02",
       "doctor_id": "doc_mehta_04",
       "department_id": "dept_gynae",
@@ -392,7 +391,7 @@
     },
     {
       "appointment_id": "APP-98104",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "patient_id": "pat_ramesh_01",
       "doctor_id": "doc_kapoor_05",
       "department_id": "dept_genmed",
@@ -413,7 +412,7 @@
   "followups": [
     {
       "followup_id": "fol_med_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "patient_id": "pat_ramesh_01",
       "appointment_id": "APP-98421",
       "type": "MEDICINE_REMINDER",
@@ -434,7 +433,7 @@
     },
     {
       "followup_id": "fol_missed_02",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "patient_id": "pat_ramesh_01",
       "appointment_id": "APP-98104",
       "type": "MISSED_APPOINTMENT",
@@ -452,7 +451,7 @@
   "conversations": [
     {
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "patient_id": "pat_ramesh_01",
       "whatsapp_number": "+919876543210",
       "patient_name": "Ramesh Singh",
@@ -468,17 +467,17 @@
         "step": "CONFIRMED"
       },
       "unread_count": 0,
-      "last_message_text": "Bilkul 😊 Apex Hospital me appointment ke liye hamare visheshagya doctors:\n\n1️⃣ Dr. Rahul Sharma (Senior Consultant Interventional Cardiologist)\n2️⃣ Dr. Priya Verma (Associate Consultant Cardiologist)\n3️⃣ Dr. Anil Gupta (Chief Orthopaedic & Robotic Joint Surgeon)\n\nAap kis doctor ya department me dikhana chahte hain?",
-      "last_message_time": "2026-08-26T15:06:01.136Z",
+      "last_message_text": "Appointment Confirmed ✅ Dr Rahul Sharma, 27 Aug 6:00 PM",
+      "last_message_time": "2026-08-26T12:30:00Z",
       "created_at": "2026-08-25T14:20:00Z",
-      "updated_at": "2026-08-26T15:06:01.136Z"
+      "updated_at": "2026-08-26T12:30:00Z"
     }
   ],
   "messages": [
     {
       "message_id": "msg_001",
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "sender_type": "PATIENT",
       "sender_name": "Ramesh Singh",
       "message_type": "TEXT",
@@ -490,9 +489,9 @@
     {
       "message_id": "msg_002",
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "sender_type": "AI_AGENT",
-      "sender_name": "Apex AI Front Desk",
+      "sender_name": "Jain AI Front Desk",
       "message_type": "TEXT",
       "content": "Namaste Ramesh ji! 😊 Aap kis department ya doctor se appointment lena chahte hain?\n\n1️⃣ Cardiology (दिल)\n2️⃣ Orthopaedics (हड्डी)\n3️⃣ General Medicine (बुखार/BP)\n4️⃣ Other",
       "agent_invoked": "APPOINTMENT",
@@ -505,7 +504,7 @@
     {
       "message_id": "msg_003",
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "sender_type": "PATIENT",
       "sender_name": "Ramesh Singh",
       "message_type": "TEXT",
@@ -517,9 +516,9 @@
     {
       "message_id": "msg_004",
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "sender_type": "AI_AGENT",
-      "sender_name": "Apex AI Appointment Desk",
+      "sender_name": "Jain AI Appointment Desk",
       "message_type": "TEXT",
       "content": "Dr. Rahul Sharma ke kal shaam ke available slots:\n\n⏰ 5:30 PM\n⏰ 6:00 PM\n⏰ 6:30 PM\n\nKaunsa time book karu aapke liye?",
       "agent_invoked": "APPOINTMENT",
@@ -532,7 +531,7 @@
     {
       "message_id": "msg_005",
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "sender_type": "PATIENT",
       "sender_name": "Ramesh Singh",
       "message_type": "TEXT",
@@ -544,9 +543,9 @@
     {
       "message_id": "msg_006",
       "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "sender_type": "AI_AGENT",
-      "sender_name": "Apex AI Appointment Desk",
+      "sender_name": "Jain AI Appointment Desk",
       "message_type": "TEXT",
       "content": "Appointment Confirmed ✅\n\n👤 Patient: Ramesh Singh\n👨‍⚕️ Doctor: Dr. Rahul Sharma\n🏥 Department: Cardiology\n📅 Date: 27 Aug 2026\n⏰ Time: 6:00 PM\n🔖 Appointment ID: APP-98421\n\nKripya 10-15 minute pehle OPD reception par report karein. Dhanyawad!",
       "agent_invoked": "APPOINTMENT",
@@ -555,40 +554,16 @@
       "latency_ms": 310,
       "delivery_status": "READ",
       "timestamp": "2026-08-25T14:22:02Z"
-    },
-    {
-      "message_id": "msg_u_1787756761133",
-      "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
-      "sender_type": "PATIENT",
-      "sender_name": "Ramesh age",
-      "message_type": "TEXT",
-      "content": "mera naam ramesh age 42 male hai aur kal shaam ko cardiologist dr sharma se appointment chahiye",
-      "intent": "BOOK_APPOINTMENT",
-      "delivery_status": "READ",
-      "timestamp": "2026-08-26T15:06:01.133Z"
-    },
-    {
-      "message_id": "msg_a_1787756761137",
-      "conversation_id": "conv_ramesh_01",
-      "hospital_id": "hosp_apex_01",
-      "sender_type": "AI_AGENT",
-      "sender_name": "Apex Care AI",
-      "message_type": "TEXT",
-      "content": "Bilkul 😊 Apex Hospital me appointment ke liye hamare visheshagya doctors:\n\n1️⃣ Dr. Rahul Sharma (Senior Consultant Interventional Cardiologist)\n2️⃣ Dr. Priya Verma (Associate Consultant Cardiologist)\n3️⃣ Dr. Anil Gupta (Chief Orthopaedic & Robotic Joint Surgeon)\n\nAap kis doctor ya department me dikhana chahte hain?",
-      "agent_invoked": "APPOINTMENT",
-      "delivery_status": "SENT",
-      "timestamp": "2026-08-26T15:06:01.136Z"
     }
   ],
   "campaigns": [
     {
       "campaign_id": "camp_diabetic_01",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "name": "Free HbA1c & Cardiac Screening Camp",
       "type": "HEALTH_CHECKUP",
       "target_audience": "DIABETIC_PATIENTS",
-      "message_template": "Namaste {{name}} ji! 🏥 Apex Hospital me is Somvar (31 Aug) ko Free Diabetes & Heart Checkup Camp aayojit kiya ja raha hai. Kya aap apna slot register karna chahenge?\n\n1️⃣ Haan, slot book karein\n2️⃣ Baad me",
+      "message_template": "Namaste {{name}} ji! 🏥 Jain Hospital me is Somvar (31 Aug) ko Free Diabetes & Heart Checkup Camp aayojit kiya ja raha hai. Kya aap apna slot register karna chahenge?\n\n1️⃣ Haan, slot book karein\n2️⃣ Baad me",
       "scheduled_at": "2026-08-29T09:00:00Z",
       "status": "SCHEDULED",
       "total_recipients": 450,
@@ -603,9 +578,9 @@
   "auditLogs": [
     {
       "log_id": "aud_001",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "user_id": "sys_ai_agent",
-      "user_name": "Apex AI Orchestrator",
+      "user_name": "Jain AI Orchestrator",
       "action": "CREATE_APPOINTMENT",
       "entity_type": "APPOINTMENT",
       "entity_id": "APP-98421",
@@ -619,9 +594,9 @@
     },
     {
       "log_id": "aud_002",
-      "hospital_id": "hosp_apex_01",
+      "hospital_id": "hosp_jain_01",
       "user_id": "sys_ai_agent",
-      "user_name": "Apex AI Orchestrator",
+      "user_name": "Jain AI Orchestrator",
       "action": "EXECUTE_TOOL",
       "entity_type": "TOOL",
       "entity_id": "create_appointment",

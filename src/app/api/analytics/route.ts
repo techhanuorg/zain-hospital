@@ -3,7 +3,7 @@ import { appointmentRepo, patientRepo, followupRepo, doctorRepo, conversationRep
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const hospitalId = searchParams.get('hospitalId') || 'hosp_apex_01';
+  const hospitalId = searchParams.get('hospitalId') || 'hosp_jain_01';
 
   const appointments = await appointmentRepo.listByHospital(hospitalId);
   const patients = await patientRepo.search(hospitalId, '');

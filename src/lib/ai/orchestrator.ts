@@ -32,7 +32,7 @@ export class AIOrchestrator {
   public static async processMessage(
     rawMessage: string,
     userPhone: string,
-    hospitalId: HospitalId = 'hosp_apex_01'
+    hospitalId: HospitalId = 'hosp_jain_01'
   ): Promise<AIResponseOutput> {
     // 1. Message Normalizer (typos, Indian colloquialisms)
     const normalizedText = MessageNormalizer.normalize(rawMessage);
@@ -199,7 +199,7 @@ export class AIOrchestrator {
     }
 
     if (!finalReply) {
-      finalReply = 'Namaste! Main Apex Super Speciality Hospital ka AI digital assistant hoon. Main aapki kya sahayata kar sakta hoon?';
+      finalReply = 'Namaste! Main Jain Hospital Bahraich ka AI digital assistant hoon. Main aapki kya sahayata kar sakta hoon?';
     }
 
     // Save message history
@@ -221,7 +221,7 @@ export class AIOrchestrator {
       conversation_id: conversation.conversation_id,
       hospital_id: hospitalId,
       sender_type: 'AI_AGENT',
-      sender_name: 'Apex Care AI',
+      sender_name: 'Jain Care AI',
       message_type: 'TEXT',
       content: finalReply,
       agent_invoked: agent,
@@ -307,11 +307,11 @@ export class AIOrchestrator {
     if (intent === 'BOOK_APPOINTMENT') {
       const doctors = await doctorRepo.listByHospital(hospitalId);
       const docList = doctors.slice(0, 3).map((d, i) => `${i + 1}️⃣ ${d.doctor_name} (${d.specialization})`).join('\n');
-      return `Bilkul 😊 Apex Hospital me appointment ke liye hamare visheshagya doctors:\n\n${docList}\n\nAap kis doctor ya department me dikhana chahte hain?`;
+      return `Bilkul 😊 Jain Hospital Bahraich me appointment ke liye hamare visheshagya doctors:\n\n${docList}\n\nAap kis doctor ya department me dikhana chahte hain?`;
     }
     if (intent === 'EMERGENCY') {
-      return `🚨 *24x7 Emergency Helpline:* +91 11 4988 2911\n\nApex Super Speciality Hospital, Plot 4, Sector 12 Dwarka. Emergency ward Gate 1 par 24 ghante khula hai.`;
+      return `🚨 *24x7 Emergency Helpline:* +91 5252 232911\n\nJain Hospital, Jain Mandir Road, Basheerganj, Bahraich. Emergency ward 24 ghante khula hai.`;
     }
-    return `Namaste! Apex Hospital me aapka swagat hai. OPD subah 8:30 AM se shaam 7:30 PM tak khula hai. Doctor appointment, timings ya emergency helpline ke liye batayein.`;
+    return `Namaste! Jain Hospital Bahraich me aapka swagat hai. OPD subah 8:30 AM se shaam 7:30 PM tak khula hai. Doctor appointment, timings ya emergency helpline ke liye batayein.`;
   }
 }
