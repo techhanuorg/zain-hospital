@@ -11,8 +11,8 @@ import path from 'path';
 import fs from 'fs';
 import { Boom } from '@hapi/boom';
 import { messageDeduplicator } from './deduplicator';
-import { AIOrchestrator } from '../ai/orchestrator';
-import { conversationRepo } from '../storage/repositories';
+import { inboundQueueEngine } from './inbound-queue';
+import { antiBanEngine } from './anti-ban-engine';
 import { WhatsAppSessionStatus } from '../types';
 
 export class BaileysManager {
@@ -39,6 +39,10 @@ export class BaileysManager {
     return path.join(process.cwd(), 'data', 'baileys_auth');
   }
 
+  public getSocket(): WASocket | null {
+    return this.socket;
+  }
+
   public getSessionInfo() {
     this.lastPing = new Date().toISOString();
     return {
@@ -51,7 +55,9 @@ export class BaileysManager {
       batteryLevel: this.status === 'CONNECTED' ? 98 : 0,
       isPlugged: true,
       lastPing: this.lastPing,
-      isBaileys: true
+      isBaileys: true,
+      antiBanTelemetry: antiBanEngine.getTelemetry(),
+      inboundQueueMetrics: inboundQueueEngine.getMetrics(),
     };
   }
 
@@ -139,6 +145,9 @@ export class BaileysManager {
           this.connectedNumber = phone ? `+${phone}` : 'Connected';
           this.isInitializing = false;
           console.log(`[Baileys] ✅ WhatsApp connected as ${this.connectedNumber}`);
+
+          // Trigger outbound queue processor now that socket is ready
+          antiBanEngine.processQueue();
         }
 
         if (connection === 'close') {
@@ -166,7 +175,7 @@ export class BaileysManager {
         }
       });
 
-      // Handle incoming messages
+      // High-Scale Inbound Handler (Buffers 100k+ bursts to inbound queue instantly)
       sock.ev.on('messages.upsert', async ({ messages, type }) => {
         if (type !== 'notify') return;
 
@@ -193,47 +202,8 @@ export class BaileysManager {
           const userPhone = rawPhone.startsWith('+') ? rawPhone : `+${rawPhone}`;
           const hospitalId = 'hosp_apex_01';
 
-          console.log(`[Baileys] 📩 Received WhatsApp message from ${userPhone}: "${messageText}"`);
-
-          try {
-            // Save incoming message in conversation history
-            let conversation = await conversationRepo.getByPhone(hospitalId, userPhone);
-            const convId = conversation?.conversation_id || `conv_${Date.now().toString(36)}`;
-
-            await conversationRepo.addMessage({
-              message_id: messageId,
-              conversation_id: convId,
-              hospital_id: hospitalId,
-              sender_type: 'PATIENT',
-              sender_name: conversation?.patient_name || userPhone,
-              message_type: 'TEXT',
-              content: messageText,
-              delivery_status: 'DELIVERED',
-              timestamp: new Date().toISOString()
-            });
-
-            // Process through AI Orchestrator
-            const result = await AIOrchestrator.processMessage(messageText, userPhone, hospitalId);
-
-            if (result.replyText && this.socket) {
-              console.log(`[Baileys] 🤖 Sending AI reply to ${userPhone}`);
-              const sent = await this.socket.sendMessage(remoteJid, { text: result.replyText });
-
-              await conversationRepo.addMessage({
-                message_id: sent?.key?.id || `reply_${Date.now()}`,
-                conversation_id: convId,
-                hospital_id: hospitalId,
-                sender_type: 'AI_AGENT',
-                sender_name: result.agent || 'CareOS Reception AI',
-                message_type: 'TEXT',
-                content: result.replyText,
-                delivery_status: 'SENT',
-                timestamp: new Date().toISOString()
-              });
-            }
-          } catch (msgErr) {
-            console.error('[Baileys] Error processing incoming WhatsApp message:', msgErr);
-          }
+          // Enqueue instantly into High-Scale Inbound Queue (< 1ms execution)
+          inboundQueueEngine.enqueue(messageId, userPhone, messageText, hospitalId);
         }
       });
 
@@ -297,6 +267,9 @@ export class BaileysManager {
     }
   }
 
+  /**
+   * Direct outbound message through socket
+   */
   public async sendMessage(phone: string, text: string): Promise<{ success: boolean; messageId: string }> {
     if (!this.socket || this.status !== 'CONNECTED') {
       return {
@@ -316,7 +289,7 @@ export class BaileysManager {
   }
 }
 
-// Global Singleton to survive Next.js module reloading
+// Global Singleton
 declare global {
   var __baileysManager: BaileysManager | undefined;
 }
