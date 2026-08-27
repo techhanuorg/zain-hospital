@@ -1,5 +1,6 @@
 import { localDB } from '../local-db';
 import { appCache } from '../cache';
+import { googleSheetsAdapter } from '../google-sheets-adapter';
 import { 
   IHospitalRepository,
   IDepartmentRepository,
@@ -170,6 +171,8 @@ export class PatientRepository implements IPatientRepository {
     localDB.mutate(db => {
       db.patients.push(patient);
     });
+    // Async background sync to Google Sheet
+    googleSheetsAdapter.syncRecord('Patients', 'INSERT', patient).catch(() => {});
     return patient;
   }
 
@@ -179,6 +182,7 @@ export class PatientRepository implements IPatientRepository {
       const idx = db.patients.findIndex(p => p.patient_id === patient.patient_id && p.hospital_id === patient.hospital_id);
       if (idx >= 0) db.patients[idx] = patient;
     });
+    googleSheetsAdapter.syncRecord('Patients', 'UPDATE', patient).catch(() => {});
     return patient;
   }
 }
@@ -222,6 +226,8 @@ export class AppointmentRepository implements IAppointmentRepository {
     localDB.mutate(db => {
       db.appointments.unshift(appointment);
     });
+    // Async background sync to Google Sheet
+    googleSheetsAdapter.syncRecord('Appointments', 'INSERT', appointment).catch(() => {});
     return appointment;
   }
 
@@ -231,6 +237,7 @@ export class AppointmentRepository implements IAppointmentRepository {
       const idx = db.appointments.findIndex(a => a.appointment_id === appointment.appointment_id && a.hospital_id === appointment.hospital_id);
       if (idx >= 0) db.appointments[idx] = appointment;
     });
+    googleSheetsAdapter.syncRecord('Appointments', 'UPDATE', appointment).catch(() => {});
     return appointment;
   }
 }
