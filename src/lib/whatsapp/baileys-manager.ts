@@ -16,6 +16,32 @@ import { inboundQueueEngine } from './inbound-queue';
 import { antiBanEngine } from './anti-ban-engine';
 import { WhatsAppSessionStatus } from '../types';
 
+export function extractMessageContent(rawMsg: any): string {
+  if (!rawMsg) return '';
+  let m = rawMsg;
+  // Unwrap nested formats (Ephemeral, ViewOnce, DocumentWithCaption, etc.)
+  if (m.ephemeralMessage?.message) m = m.ephemeralMessage.message;
+  if (m.viewOnceMessage?.message) m = m.viewOnceMessage.message;
+  if (m.viewOnceMessageV2?.message) m = m.viewOnceMessageV2.message;
+  if (m.documentWithCaptionMessage?.message) m = m.documentWithCaptionMessage.message;
+
+  const text =
+    m.conversation ||
+    m.extendedTextMessage?.text ||
+    m.imageMessage?.caption ||
+    m.videoMessage?.caption ||
+    m.buttonsResponseMessage?.selectedDisplayText ||
+    m.buttonsResponseMessage?.selectedButtonId ||
+    m.templateButtonReplyMessage?.selectedDisplayText ||
+    m.templateButtonReplyMessage?.selectedId ||
+    m.listResponseMessage?.title ||
+    m.listResponseMessage?.singleSelectReply?.selectedRowId ||
+    m.interactiveResponseMessage?.body?.text ||
+    '';
+
+  return (text || '').trim();
+}
+
 export function sanitizePhoneNumberForPairing(raw: string): string {
   let cleaned = raw.replace(/[^0-9]/g, '');
   if (!cleaned) return '';
@@ -196,8 +222,6 @@ export class BaileysManager {
 
       // High-Scale Inbound Handler (Buffers 100k+ bursts to inbound queue instantly)
       sock.ev.on('messages.upsert', async ({ messages, type }) => {
-        if (type !== 'notify') return;
-
         for (const msg of messages) {
           // Ignore own messages or status broadcasts
           if (!msg.message || msg.key.fromMe) continue;
@@ -207,19 +231,17 @@ export class BaileysManager {
           const messageId = msg.key.id || `msg_${Date.now()}`;
           if (messageDeduplicator.isDuplicate(messageId)) continue;
 
-          // Extract text content
-          const messageText =
-            msg.message.conversation ||
-            msg.message.extendedTextMessage?.text ||
-            msg.message.imageMessage?.caption ||
-            msg.message.videoMessage?.caption ||
-            '';
+          // Extract text content (handles standard, ephemeral, viewOnce, and button replies)
+          const messageText = extractMessageContent(msg.message);
 
           if (!messageText || messageText.trim() === '') continue;
 
-          const rawPhone = remoteJid.split('@')[0].replace(/[^0-9]/g, '');
+          // Strip device ID (e.g. 919876543210:1@s.whatsapp.net -> 919876543210)
+          const rawPhone = remoteJid.split('@')[0].split(':')[0].replace(/[^0-9]/g, '');
           const userPhone = rawPhone.startsWith('+') ? rawPhone : `+${rawPhone}`;
           const hospitalId = 'hosp_jain_01';
+
+          console.log(`[Baileys] 📥 Incoming message from ${userPhone}: "${messageText}"`);
 
           // Enqueue instantly into High-Scale Inbound Queue (< 1ms execution)
           inboundQueueEngine.enqueue(messageId, userPhone, messageText, hospitalId);
@@ -344,9 +366,10 @@ export class BaileysManager {
       };
     }
 
-    const cleanPhone = phone.replace(/[^0-9]/g, '');
+    const cleanPhone = phone.split('@')[0].split(':')[0].replace(/[^0-9]/g, '');
     const jid = `${cleanPhone}@s.whatsapp.net`;
 
+    console.log(`[Baileys] 🚀 Sending outbound reply to ${cleanPhone}: "${text.slice(0, 60)}..."`);
     const res = await this.socket.sendMessage(jid, { text });
     return {
       success: true,
