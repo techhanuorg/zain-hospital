@@ -450,12 +450,40 @@
   ],
   "conversations": [
     {
+      "conversation_id": "conv_mtd47br1",
+      "hospital_id": "hosp_jain_01",
+      "whatsapp_number": "+919876543277",
+      "status": "ACTIVE",
+      "active_agent": "FRONT_DESK",
+      "detected_language": "hinglish",
+      "context_data": {},
+      "unread_count": 0,
+      "last_message_text": "Namaste! Main Jain Hospital & Research Centre ka Patient Care Agent hoon. 🙏\n\nAapki dawai 10 din ki course ke baad khatam ho rahi hai — yeh bahut accha hai ki aapne yahan check-in kiya hai.\n\nKuch important baatein:\n\n1. **Dawai band karne se pehle doctor se consult karna zaroori hai.** Kabhi-kabhi doctor course khatam hone ke baad bhi kuch aur din dawai chalne ko kehte hain, ya koi test karwate hain.\n2. **Main dawai band ya change nahi kar sakta** — yeh sirf aapke treating doctor hi decide kar sakte hain.\n\nKya aap chahte hain ki main aapke **treating doctor ke saath follow-up consultation** book kar doon? Isse aap doctor se directly baat karke pata laga sakte hain ki:\n- Dawai ab band karni hai ya nahi\n- Koi follow-up test chahiye ya nahi\n- Recovery kaisi chal rahi hai\n\nAgar haan, toh mujhe bataiye:\n- **Aapka naam** kya hai?\n- **Kaunsa department/doctor** aapka treating doctor hai? (jaise Cardiology, General Medicine, etc.)\n- **Kis din** follow-up chahiye? (Aapne 29 Aug 2026 mention kiya hai — kya yehi date theek hai?)\n\nAgar aapko abhi koi **serious symptom** ho raha hai (jaise tez dard, saans lene mein takleef, achanak kamzori), toh turant **24x7 Emergency Room** mein jayein ya **+91 5252 232911** par call karein.",
+      "last_message_time": "2026-08-28T15:37:00.434Z",
+      "created_at": "2026-08-28T15:36:58.429Z",
+      "updated_at": "2026-08-28T15:37:00.434Z"
+    },
+    {
+      "conversation_id": "conv_mtd46rxe",
+      "hospital_id": "hosp_jain_01",
+      "whatsapp_number": "+919876543299",
+      "status": "HUMAN_ASSIGNED",
+      "active_agent": "FRONT_DESK",
+      "detected_language": "hinglish",
+      "context_data": {},
+      "unread_count": 0,
+      "last_message_text": "Bilkul ji, main aapko reception staff se connect kar raha hoon. Kisi staff member ne aapke baare mein jaankari le li hai aur wo jald hi aapse baat karenge.\n\nKripya thoda intezaar karein, koi staff member jald hi aapke saath connect hoga. 🙏",
+      "last_message_time": "2026-08-28T15:36:34.735Z",
+      "created_at": "2026-08-28T15:36:32.738Z",
+      "updated_at": "2026-08-28T15:36:34.735Z"
+    },
+    {
       "conversation_id": "conv_ramesh_01",
       "hospital_id": "hosp_jain_01",
       "patient_id": "pat_ramesh_01",
       "whatsapp_number": "+919876543210",
       "patient_name": "Ramesh Singh",
-      "status": "ACTIVE",
+      "status": "HUMAN_ASSIGNED",
       "active_agent": "APPOINTMENT",
       "detected_language": "hinglish",
       "last_intent": "BOOK_APPOINTMENT",
@@ -467,10 +495,10 @@
         "step": "CONFIRMED"
       },
       "unread_count": 0,
-      "last_message_text": "Appointment Confirmed ✅ Dr Rahul Sharma, 27 Aug 6:00 PM",
-      "last_message_time": "2026-08-26T12:30:00Z",
+      "last_message_text": "🚨 **EMERGENCY - Kripya turant ye number par call karein:**\n\n**📞 +91 5252 232911** (24x7 Emergency Helpline)\n\nMaine hospital staff ko turant inform kar diya hai. Kripya upar diye gaye number par **abhi call karein** taaki ambulance jaldi bheji ja sake.\n\n**Kripya phone par ye details ready rakhein:**\n- Patient ka naam\n- Exact address / landmark\n- Patient ki age aur gender\n- Kya hua (behosh ho gaya)\n\n**Dhyan dein:**\n- Patient ko safe jagah par le jaayein\n- Saans lene ki koshish karein\n- Koi cheez na khilaayein\n- Phone par hospital staff se baat karte rahein\n\n**📞 +91 5252 232911** - Abhi call karein ji! 🙏",
+      "last_message_time": "2026-08-28T15:36:08.118Z",
       "created_at": "2026-08-25T14:20:00Z",
-      "updated_at": "2026-08-26T12:30:00Z"
+      "updated_at": "2026-08-28T15:36:08.118Z"
     }
   ],
   "messages": [
@@ -554,6 +582,150 @@
       "latency_ms": 310,
       "delivery_status": "READ",
       "timestamp": "2026-08-25T14:22:02Z"
+    },
+    {
+      "message_id": "msg_u_1787931034622",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "Ramesh Singh",
+      "message_type": "TEXT",
+      "content": "Namaste hospital timings kya hai aur address kya hai?",
+      "intent": "HOSPITAL_INFORMATION",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-28T15:30:34.622Z"
+    },
+    {
+      "message_id": "msg_a_1787931034625",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Jain Care AI",
+      "message_type": "TEXT",
+      "content": "Namaste ji! 🙏\n\n**🏥 Jain Hospital & Research Centre, Bahraich**\n\n**Address:**\nMain Road, Near Bus Stand, Bahraich, Uttar Pradesh - 271401\n\n**OPD Timings:**\n- Monday to Saturday: 9:00 AM – 1:00 PM & 4:00 PM – 8:00 PM\n- Sunday: 9:00 AM – 12:00 PM (Emergency 24x7 available)\n\n**🚨 Emergency Helpline (24x7):**\n+91 5252 232911\n\nKya aapko aur koi madad chahiye?",
+      "agent_invoked": "FRONT_DESK",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-28T15:30:34.624Z"
+    },
+    {
+      "message_id": "msg_u_1787931046731",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "Rahul Kumar",
+      "message_type": "TEXT",
+      "content": "Mujhe Dr. Vivek Sharma se milna hai heart problem hai kal sham ko, mera naam Rahul Kumar age 35",
+      "intent": "BOOK_APPOINTMENT",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-28T15:30:46.731Z"
+    },
+    {
+      "message_id": "msg_a_1787931046738",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Jain Care AI",
+      "message_type": "TEXT",
+      "content": "<tool_call>\n<function=get_available_slots>\n<parameter=doctor_id>\ndoc_sharma_01\n</parameter>\n<parameter=date>\n2026-08-29\n</parameter>\n<parameter=time_preference>\nevening\n</parameter>\n</function>\n</tool_call>",
+      "agent_invoked": "APPOINTMENT",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-28T15:30:46.737Z"
+    },
+    {
+      "message_id": "msg_u_1787931341110",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "Ramesh hai",
+      "message_type": "TEXT",
+      "content": "Mujhe Dr. Rahul Sharma se milna hai kal sham ko, mera naam Ramesh hai",
+      "intent": "BOOK_APPOINTMENT",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-28T15:35:41.110Z"
+    },
+    {
+      "message_id": "msg_a_1787931341116",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Jain Care AI",
+      "message_type": "TEXT",
+      "content": "Namaste Ramesh ji! 🙏\n\nAapka appointment **Dr. Rahul Sharma** (Cardiology) se **kal 29 Aug 2026** ko shaam ko book karna hai.\n\nAvailable slots yeh hain:\n\n1️⃣ 4:00 PM\n2️⃣ 4:30 PM\n3️⃣ 5:00 PM\n4️⃣ 5:30 PM\n5️⃣ 6:00 PM\n6️⃣ 6:30 PM\n\nKya aap **6:00 PM** wala slot chahiye? Ya koi aur time bataiye?",
+      "agent_invoked": "APPOINTMENT",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-28T15:35:41.115Z"
+    },
+    {
+      "message_id": "msg_u_1787931368116",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "Ramesh Singh",
+      "message_type": "TEXT",
+      "content": "Emergency hai patient behosh ho gaya hai jaldi ambulance bhejo",
+      "intent": "EMERGENCY",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-28T15:36:08.116Z"
+    },
+    {
+      "message_id": "msg_a_1787931368119",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Jain Care AI",
+      "message_type": "TEXT",
+      "content": "🚨 **EMERGENCY - Kripya turant ye number par call karein:**\n\n**📞 +91 5252 232911** (24x7 Emergency Helpline)\n\nMaine hospital staff ko turant inform kar diya hai. Kripya upar diye gaye number par **abhi call karein** taaki ambulance jaldi bheji ja sake.\n\n**Kripya phone par ye details ready rakhein:**\n- Patient ka naam\n- Exact address / landmark\n- Patient ki age aur gender\n- Kya hua (behosh ho gaya)\n\n**Dhyan dein:**\n- Patient ko safe jagah par le jaayein\n- Saans lene ki koshish karein\n- Koi cheez na khilaayein\n- Phone par hospital staff se baat karte rahein\n\n**📞 +91 5252 232911** - Abhi call karein ji! 🙏",
+      "agent_invoked": "FRONT_DESK",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-28T15:36:08.118Z"
+    },
+    {
+      "message_id": "msg_u_1787931394725",
+      "conversation_id": "conv_mtd46rxe",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "+919876543299",
+      "message_type": "TEXT",
+      "content": "Mujhe reception staff se baat karni hai insan se connect karo",
+      "intent": "HUMAN_HANDOFF",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-28T15:36:34.725Z"
+    },
+    {
+      "message_id": "msg_a_1787931394736",
+      "conversation_id": "conv_mtd46rxe",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Jain Care AI",
+      "message_type": "TEXT",
+      "content": "Bilkul ji, main aapko reception staff se connect kar raha hoon. Kisi staff member ne aapke baare mein jaankari le li hai aur wo jald hi aapse baat karenge.\n\nKripya thoda intezaar karein, koi staff member jald hi aapke saath connect hoga. 🙏",
+      "agent_invoked": "FRONT_DESK",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-28T15:36:34.735Z"
+    },
+    {
+      "message_id": "msg_u_1787931420431",
+      "conversation_id": "conv_mtd47br1",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "+919876543277",
+      "message_type": "TEXT",
+      "content": "Meri dawai kal khatam ho rahi hai doctor ne 10 din ki di thi",
+      "intent": "MEDICINE_REMINDER",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-28T15:37:00.431Z"
+    },
+    {
+      "message_id": "msg_a_1787931420435",
+      "conversation_id": "conv_mtd47br1",
+      "hospital_id": "hosp_jain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Jain Care AI",
+      "message_type": "TEXT",
+      "content": "Namaste! Main Jain Hospital & Research Centre ka Patient Care Agent hoon. 🙏\n\nAapki dawai 10 din ki course ke baad khatam ho rahi hai — yeh bahut accha hai ki aapne yahan check-in kiya hai.\n\nKuch important baatein:\n\n1. **Dawai band karne se pehle doctor se consult karna zaroori hai.** Kabhi-kabhi doctor course khatam hone ke baad bhi kuch aur din dawai chalne ko kehte hain, ya koi test karwate hain.\n2. **Main dawai band ya change nahi kar sakta** — yeh sirf aapke treating doctor hi decide kar sakte hain.\n\nKya aap chahte hain ki main aapke **treating doctor ke saath follow-up consultation** book kar doon? Isse aap doctor se directly baat karke pata laga sakte hain ki:\n- Dawai ab band karni hai ya nahi\n- Koi follow-up test chahiye ya nahi\n- Recovery kaisi chal rahi hai\n\nAgar haan, toh mujhe bataiye:\n- **Aapka naam** kya hai?\n- **Kaunsa department/doctor** aapka treating doctor hai? (jaise Cardiology, General Medicine, etc.)\n- **Kis din** follow-up chahiye? (Aapne 29 Aug 2026 mention kiya hai — kya yehi date theek hai?)\n\nAgar aapko abhi koi **serious symptom** ho raha hai (jaise tez dard, saans lene mein takleef, achanak kamzori), toh turant **24x7 Emergency Room** mein jayein ya **+91 5252 232911** par call karein.",
+      "agent_invoked": "PATIENT_CARE",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-28T15:37:00.434Z"
     }
   ],
   "campaigns": [

@@ -118,7 +118,6 @@ declare global {
   var __campaignDispatcher: CampaignDispatcher | undefined;
 }
 
-export const campaignDispatcher = globalThis.__campaignDispatcher || new CampaignDispatcher();
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.__campaignDispatcher = campaignDispatcher;
-}
+export const campaignDispatcher: CampaignDispatcher =
+  globalThis.__campaignDispatcher || (globalThis.__campaignDispatcher = new CampaignDispatcher());
+

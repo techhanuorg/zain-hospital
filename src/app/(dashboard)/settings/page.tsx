@@ -282,7 +282,7 @@ export default function SettingsPage() {
               <label className="text-slate-500 block mb-1 font-medium">Primary LLM Model</label>
               <input
                 type="text"
-                defaultValue="llama-3.3-70b-versatile"
+                defaultValue="qwen/qwen3.8-27b"
                 className="w-full border border-slate-200 rounded-lg p-2 font-mono text-xs"
               />
             </div>

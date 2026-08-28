@@ -294,7 +294,6 @@ declare global {
   var __baileysManager: BaileysManager | undefined;
 }
 
-export const baileysManager = globalThis.__baileysManager || new BaileysManager();
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.__baileysManager = baileysManager;
-}
+export const baileysManager: BaileysManager =
+  globalThis.__baileysManager || (globalThis.__baileysManager = new BaileysManager());
+

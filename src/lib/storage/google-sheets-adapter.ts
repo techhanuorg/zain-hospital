@@ -143,7 +143,6 @@ declare global {
   var __googleSheetsAdapter: GoogleSheetsAdapter | undefined;
 }
 
-export const googleSheetsAdapter = globalThis.__googleSheetsAdapter || new GoogleSheetsAdapter();
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.__googleSheetsAdapter = googleSheetsAdapter;
-}
+export const googleSheetsAdapter: GoogleSheetsAdapter =
+  globalThis.__googleSheetsAdapter || (globalThis.__googleSheetsAdapter = new GoogleSheetsAdapter());
+

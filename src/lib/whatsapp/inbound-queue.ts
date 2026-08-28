@@ -267,7 +267,6 @@ declare global {
   var __inboundQueueEngine: InboundQueueEngine | undefined;
 }
 
-export const inboundQueueEngine = globalThis.__inboundQueueEngine || new InboundQueueEngine();
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.__inboundQueueEngine = inboundQueueEngine;
-}
+export const inboundQueueEngine: InboundQueueEngine =
+  globalThis.__inboundQueueEngine || (globalThis.__inboundQueueEngine = new InboundQueueEngine());
+

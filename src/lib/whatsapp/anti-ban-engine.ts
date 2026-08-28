@@ -357,7 +357,6 @@ declare global {
   var __antiBanEngine: AntiBanEngine | undefined;
 }
 
-export const antiBanEngine = globalThis.__antiBanEngine || new AntiBanEngine();
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.__antiBanEngine = antiBanEngine;
-}
+export const antiBanEngine: AntiBanEngine =
+  globalThis.__antiBanEngine || (globalThis.__antiBanEngine = new AntiBanEngine());
+

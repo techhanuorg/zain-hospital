@@ -123,61 +123,78 @@ class GroqKeyPoolManager {
     messages: GroqMessage[],
     options: GroqChatOptions = {}
   ): Promise<{ response: any; keyIndex: number; latencyMs: number }> {
-    const maxRetries = Math.min(this.keys.length, 5);
-    const model = options.model || 'llama-3.3-70b-versatile';
+    const supportedModels = ['qwen/qwen3.8-27b', 'groq/compound', 'openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'groq/compound-mini'];
+    const requestedModel = options.model || 'qwen/qwen3.8-27b';
+    const modelsToTry = [requestedModel, ...supportedModels.filter(m => m !== requestedModel)];
     let lastError: any = null;
 
-    for (let retry = 0; retry < maxRetries; retry++) {
-      const keyIndex = this.getNextAvailableKeyIndex();
-      const apiKey = this.keys[keyIndex];
-      const startTime = Date.now();
+    for (const model of modelsToTry) {
+      const maxRetries = Math.min(this.keys.length, 5);
 
-      try {
-        const body: any = {
-          model,
-          messages,
-          temperature: options.temperature ?? 0.2,
-          max_tokens: options.max_tokens ?? 1024,
-        };
+      for (let retry = 0; retry < maxRetries; retry++) {
+        const keyIndex = this.getNextAvailableKeyIndex();
+        const apiKey = this.keys[keyIndex];
+        const startTime = Date.now();
 
-        if (options.tools && options.tools.length > 0) {
-          body.tools = options.tools;
-          body.tool_choice = options.tool_choice || 'auto';
+        try {
+          const body: any = {
+            model,
+            messages,
+            temperature: options.temperature ?? 0.2,
+            max_tokens: options.max_tokens ?? 1024,
+          };
+
+          if (options.tools && options.tools.length > 0) {
+            body.tools = options.tools;
+            body.tool_choice = options.tool_choice || 'auto';
+          }
+
+          if (options.response_format) {
+            body.response_format = options.response_format;
+          }
+
+          const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify(body),
+          });
+
+          const latencyMs = Date.now() - startTime;
+
+          if (!res.ok) {
+            const errorData: any = await res.json().catch(() => ({}));
+            this.recordFailure(keyIndex, res.status);
+            lastError = new Error(`Groq API Error (${res.status}): ${JSON.stringify(errorData)}`);
+
+            // If model does not exist or decommissioned, break inner retry loop to try next model
+            if (res.status === 404 || errorData?.error?.code === 'model_not_found' || errorData?.error?.code === 'model_decommissioned') {
+              break;
+            }
+            continue; // failover to next key in pool
+          }
+
+          const data = await res.json();
+          this.recordSuccess(keyIndex, latencyMs);
+
+          // Clean any <think> tags if model produces reasoning
+          if (data.choices?.[0]?.message?.content) {
+            data.choices[0].message.content = data.choices[0].message.content
+              .replace(/<think>[\s\S]*?<\/think>/gi, '')
+              .trim();
+          }
+
+          return {
+            response: data,
+            keyIndex,
+            latencyMs,
+          };
+        } catch (err: any) {
+          this.recordFailure(keyIndex, 500);
+          lastError = err;
         }
-
-        if (options.response_format) {
-          body.response_format = options.response_format;
-        }
-
-        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify(body),
-        });
-
-        const latencyMs = Date.now() - startTime;
-
-        if (!res.ok) {
-          const errorData = await res.json().catch(() => ({}));
-          this.recordFailure(keyIndex, res.status);
-          lastError = new Error(`Groq API Error (${res.status}): ${JSON.stringify(errorData)}`);
-          continue; // failover to next key in pool
-        }
-
-        const data = await res.json();
-        this.recordSuccess(keyIndex, latencyMs);
-
-        return {
-          response: data,
-          keyIndex,
-          latencyMs,
-        };
-      } catch (err: any) {
-        this.recordFailure(keyIndex, 500);
-        lastError = err;
       }
     }
 
