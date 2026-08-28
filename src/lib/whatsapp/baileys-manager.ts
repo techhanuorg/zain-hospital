@@ -3,6 +3,7 @@ import makeWASocket, {
   useMultiFileAuthState,
   fetchLatestBaileysVersion,
   makeCacheableSignalKeyStore,
+  Browsers,
   WASocket,
 } from '@whiskeysockets/baileys';
 import pino from 'pino';
@@ -14,6 +15,20 @@ import { messageDeduplicator } from './deduplicator';
 import { inboundQueueEngine } from './inbound-queue';
 import { antiBanEngine } from './anti-ban-engine';
 import { WhatsAppSessionStatus } from '../types';
+
+export function sanitizePhoneNumberForPairing(raw: string): string {
+  let cleaned = raw.replace(/[^0-9]/g, '');
+  if (!cleaned) return '';
+  // 10 digits (Standard Indian mobile numbers)
+  if (cleaned.length === 10 && /^[6-9]/.test(cleaned)) {
+    return `91${cleaned}`;
+  }
+  // 11 digits starting with 0
+  if (cleaned.length === 11 && cleaned.startsWith('0')) {
+    return `91${cleaned.slice(1)}`;
+  }
+  return cleaned;
+}
 
 export class BaileysManager {
   private socket: WASocket | null = null;
@@ -107,7 +122,7 @@ export class BaileysManager {
         },
         printQRInTerminal: false,
         generateHighQualityLinkPreview: true,
-        browser: ['CareOS Hospital Reception', 'Chrome', '120.0.0'],
+        browser: Browsers.ubuntu('Chrome'),
         syncFullHistory: false,
         connectTimeoutMs: 60000,
         defaultQueryTimeoutMs: 60000,
@@ -220,31 +235,34 @@ export class BaileysManager {
   }
 
   public async requestPairingCode(phoneNumber: string): Promise<string> {
-    const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
-    if (!cleanPhone || cleanPhone.length < 10) {
-      throw new Error('Valid phone number with country code is required (e.g. 919876543210)');
+    const cleanPhone = sanitizePhoneNumberForPairing(phoneNumber);
+    if (!cleanPhone || cleanPhone.length < 8) {
+      throw new Error('Valid phone number with country code is required (e.g. 919876543210 or +91 98765 43210)');
     }
 
-    // Disconnect and clear auth directory if not registered to get fresh pairing state
-    if (!this.socket || !this.socket.user) {
-      await this.disconnect();
-      this.clearAuthDir();
-      await this.init();
-    }
+    // Always ensure fresh clean state for new pairing attempt on any number
+    await this.disconnect();
+    this.clearAuthDir();
+    this.pairingCode = null;
+    this.qrCode = null;
+    this.qrDataUrl = null;
 
-    // Wait up to 5 seconds for socket creation
+    // Start fresh socket instance
+    await this.init();
+
+    // Wait until socket is created
     let waited = 0;
-    while (!this.socket && waited < 5000) {
-      await new Promise(r => setTimeout(r, 250));
-      waited += 250;
+    while (!this.socket && waited < 8000) {
+      await new Promise(r => setTimeout(r, 200));
+      waited += 200;
     }
 
     if (!this.socket) {
-      throw new Error('Failed to initialize WhatsApp socket connection');
+      throw new Error('Failed to initialize WhatsApp connection socket');
     }
 
-    // Small delay to ensure handshake is initiated
-    await new Promise(r => setTimeout(r, 1500));
+    // Wait 3 seconds for websocket connection to reach registration stage
+    await new Promise(r => setTimeout(r, 3000));
 
     try {
       const code = await this.socket.requestPairingCode(cleanPhone);
@@ -253,14 +271,17 @@ export class BaileysManager {
       this.status = 'QR_REQUIRED';
       return formattedCode;
     } catch (err: any) {
-      console.error('[Baileys] Error requesting pairing code:', err);
-      throw new Error(err.message || 'Failed to request pairing code from WhatsApp');
+      console.error('[Baileys] Error requesting pairing code for', cleanPhone, err);
+      throw new Error(err.message || 'WhatsApp server rejected pairing code request. Please verify number format.');
     }
   }
 
   public async refreshQR(): Promise<{ status: WhatsAppSessionStatus; qrCode: string | null; qrDataUrl: string | null }> {
     await this.disconnect();
     this.clearAuthDir();
+    this.pairingCode = null;
+    this.qrCode = null;
+    this.qrDataUrl = null;
     await this.init();
     return {
       status: this.status,
