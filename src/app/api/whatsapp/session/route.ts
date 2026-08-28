@@ -26,6 +26,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(res);
     }
 
+    if (action === 'request_pairing_code') {
+      if (!phone) {
+        return NextResponse.json({ error: 'Phone number is required for pairing code' }, { status: 400 });
+      }
+      const pairingCode = await baileysManager.requestPairingCode(phone);
+      return NextResponse.json({
+        success: true,
+        pairingCode,
+        status: 'PAIRING_CODE_SENT'
+      });
+    }
+
     if (action === 'reconnect') {
       await baileysManager.reconnect();
       return NextResponse.json({ status: 'CONNECTING' });

@@ -20,6 +20,7 @@ export class BaileysManager {
   private status: WhatsAppSessionStatus = 'DISCONNECTED';
   private qrCode: string | null = null;
   private qrDataUrl: string | null = null;
+  private pairingCode: string | null = null;
   private connectedNumber: string | null = null;
   private connectedSince: string | null = null;
   private instanceName: string = 'Jain-CareOS-WhatsApp';
@@ -49,6 +50,7 @@ export class BaileysManager {
       status: this.status,
       qrCode: this.qrCode,
       qrDataUrl: this.qrDataUrl,
+      pairingCode: this.pairingCode,
       connectedNumber: this.connectedNumber,
       connectedSince: this.connectedSince,
       instanceName: this.instanceName,
@@ -138,6 +140,7 @@ export class BaileysManager {
           this.status = 'CONNECTED';
           this.qrCode = null;
           this.qrDataUrl = null;
+          this.pairingCode = null;
           this.connectedSince = new Date().toISOString();
           
           const rawUser = sock.user?.id || '';
@@ -164,6 +167,7 @@ export class BaileysManager {
             this.connectedSince = null;
             this.qrCode = null;
             this.qrDataUrl = null;
+            this.pairingCode = null;
             this.clearAuthDir();
           } else {
             this.status = 'CONNECTING';
@@ -215,6 +219,45 @@ export class BaileysManager {
     }
   }
 
+  public async requestPairingCode(phoneNumber: string): Promise<string> {
+    const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+      throw new Error('Valid phone number with country code is required (e.g. 919876543210)');
+    }
+
+    // Disconnect and clear auth directory if not registered to get fresh pairing state
+    if (!this.socket || !this.socket.user) {
+      await this.disconnect();
+      this.clearAuthDir();
+      await this.init();
+    }
+
+    // Wait up to 5 seconds for socket creation
+    let waited = 0;
+    while (!this.socket && waited < 5000) {
+      await new Promise(r => setTimeout(r, 250));
+      waited += 250;
+    }
+
+    if (!this.socket) {
+      throw new Error('Failed to initialize WhatsApp socket connection');
+    }
+
+    // Small delay to ensure handshake is initiated
+    await new Promise(r => setTimeout(r, 1500));
+
+    try {
+      const code = await this.socket.requestPairingCode(cleanPhone);
+      const formattedCode = code && code.length === 8 ? `${code.slice(0, 4)}-${code.slice(4)}` : code;
+      this.pairingCode = formattedCode;
+      this.status = 'QR_REQUIRED';
+      return formattedCode;
+    } catch (err: any) {
+      console.error('[Baileys] Error requesting pairing code:', err);
+      throw new Error(err.message || 'Failed to request pairing code from WhatsApp');
+    }
+  }
+
   public async refreshQR(): Promise<{ status: WhatsAppSessionStatus; qrCode: string | null; qrDataUrl: string | null }> {
     await this.disconnect();
     this.clearAuthDir();
@@ -243,6 +286,7 @@ export class BaileysManager {
       this.socket = null;
     }
     this.status = 'DISCONNECTED';
+    this.pairingCode = null;
     this.isInitializing = false;
   }
 
@@ -253,6 +297,7 @@ export class BaileysManager {
     this.connectedSince = null;
     this.qrCode = null;
     this.qrDataUrl = null;
+    this.pairingCode = null;
     this.status = 'DISCONNECTED';
   }
 
