@@ -112,8 +112,18 @@ export class BaileysManager {
     if (this.socket && this.status === 'CONNECTED') {
       return;
     }
-    if (this.isInitializing) {
-      return;
+
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+
+    // Close any previous stale socket
+    if (this.socket) {
+      try {
+        this.socket.end(undefined);
+      } catch (e) {}
+      this.socket = null;
     }
 
     this.isInitializing = true;
@@ -156,8 +166,14 @@ export class BaileysManager {
 
       this.socket = sock;
 
-      // Handle credential updates
-      sock.ev.on('creds.update', saveCreds);
+      // Handle credential updates immediately
+      sock.ev.on('creds.update', async () => {
+        try {
+          await saveCreds();
+        } catch (e) {
+          console.error('[Baileys] Error saving creds:', e);
+        }
+      });
 
       // Handle connection updates (QR code, connect, disconnect)
       sock.ev.on('connection.update', async (update) => {
@@ -185,7 +201,7 @@ export class BaileysManager {
           this.connectedSince = new Date().toISOString();
           
           const rawUser = sock.user?.id || '';
-          const phone = rawUser.split(':')[0].replace(/[^0-9]/g, '');
+          const phone = rawUser.split('@')[0].split(':')[0].replace(/[^0-9]/g, '');
           this.connectedNumber = phone ? `+${phone}` : 'Connected';
           this.isInitializing = false;
           console.log(`[Baileys] ✅ WhatsApp connected as ${this.connectedNumber}`);
@@ -195,7 +211,7 @@ export class BaileysManager {
         }
 
         if (connection === 'close') {
-          const statusCode = (lastDisconnect?.error as Boom)?.output?.statusCode;
+          const statusCode = (lastDisconnect?.error as Boom)?.output?.statusCode || (lastDisconnect?.error as any)?.statusCode;
           const isLoggedOut = statusCode === DisconnectReason.loggedOut;
           console.log(`[Baileys] Connection closed. Reason code: ${statusCode}, LoggedOut: ${isLoggedOut}`);
 
@@ -211,11 +227,12 @@ export class BaileysManager {
             this.pairingCode = null;
             this.clearAuthDir();
           } else {
+            // Auto reconnect on all restarts (code 515, 428, network loss)
             this.status = 'CONNECTING';
             if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
             this.reconnectTimeout = setTimeout(() => {
-              this.init();
-            }, 3000);
+              this.init().catch(e => console.error('[Baileys] Reconnect failed:', e));
+            }, 2500);
           }
         }
       });
