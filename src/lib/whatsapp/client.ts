@@ -33,9 +33,33 @@ export class ModularWhatsAppClient {
     // 2. Evolution API integration if configured
     if (process.env.EVOLUTION_API_ENDPOINT && process.env.EVOLUTION_API_KEY) {
       try {
-        // Modular Evolution API dispatch
+        const cleanPhone = payload.phone.replace(/[^0-9]/g, '');
+        const endpoint = process.env.EVOLUTION_API_ENDPOINT.replace(/\/$/, '');
+        const instanceName = process.env.EVOLUTION_INSTANCE_NAME || 'Zain-Hospital-Main';
+        const apiKey = process.env.EVOLUTION_API_KEY;
+
+        const res = await fetch(`${endpoint}/message/sendText/${instanceName}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': apiKey,
+          },
+          body: JSON.stringify({
+            number: cleanPhone,
+            text: payload.text,
+            delay: 1200
+          })
+        });
+
+        if (res.ok) {
+          const data: any = await res.json().catch(() => ({}));
+          return {
+            success: true,
+            messageId: data.key?.id || data.messageId || `evo_${Date.now()}`
+          };
+        }
       } catch (err) {
-        console.warn('Evolution API dispatch offline');
+        console.warn('[ModularWhatsAppClient] Evolution API dispatch offline/failed:', err);
       }
     }
 

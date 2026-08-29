@@ -495,18 +495,19 @@
         "patientName": "Mohd Zaid",
         "patientAge": 28,
         "doctorQuery": "Dr. Rahul Sharma",
-        "selectedDate": "2026-08-31",
+        "selectedDate": "2026-08-30",
         "selectedDoctorId": "doc_sharma_01",
         "selectedDoctorName": "Dr. Rahul Sharma",
         "selectedDepartmentId": "dept_cardio",
         "confirmedAppointmentId": "APP-91502",
-        "step": "CONFIRMED"
+        "step": "CONFIRMED",
+        "selectedTime": "17:00"
       },
       "unread_count": 0,
-      "last_message_text": "✅ **Appointment Confirmed!**  \n\n- **👨‍⚕️ Doctor:** Dr. Rahul Sharma (Cardiology)  \n- **📅 Date:** 31 August 2026 (Monday)  \n- **⏰ Time:** 5:30 PM (17:30)  \n- **🆔 Appointment ID:** `APP-91502`  \n\n💰 **Consultation Fee:** ₹1,000  \n\nAapka appointment confirm ho gaya hai. Kisi bhi samay agar aapko reschedule ya cancel karna ho, ya koi aur sawaal ho, toh bas batayein.  \n\n🩺 **Shubh swasthya!**",
-      "last_message_time": "2026-08-29T02:02:25.027Z",
+      "last_message_text": "Maaf kijiye, aaj (30 August 2026) Dr. Rahul Sharma ke paas koi bhi slot available nahi hai.\n\nKya aap kal (31 August 2026) ya kisi aur din ke liye appointment book karna chahenge?",
+      "last_message_time": "2026-08-29T03:29:44.276Z",
       "created_at": "2026-08-29T02:01:13.011Z",
-      "updated_at": "2026-08-29T02:02:25.027Z",
+      "updated_at": "2026-08-29T03:29:44.276Z",
       "last_intent": "BOOK_APPOINTMENT"
     },
     {
@@ -1408,6 +1409,30 @@
       "agent_invoked": "APPOINTMENT",
       "delivery_status": "SENT",
       "timestamp": "2026-08-29T02:02:25.027Z"
+    },
+    {
+      "message_id": "msg_u_1787974184272",
+      "conversation_id": "conv_mtdqi3w2",
+      "hospital_id": "hosp_zain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "Mohd Zaid",
+      "message_type": "TEXT",
+      "content": "Mujhe doctor Rahul Sharma se appointment book karni hai kal shaam 5 baje",
+      "intent": "BOOK_APPOINTMENT",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-29T03:29:44.272Z"
+    },
+    {
+      "message_id": "msg_a_1787974184277",
+      "conversation_id": "conv_mtdqi3w2",
+      "hospital_id": "hosp_zain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Zain Care AI",
+      "message_type": "TEXT",
+      "content": "Maaf kijiye, aaj (30 August 2026) Dr. Rahul Sharma ke paas koi bhi slot available nahi hai.\n\nKya aap kal (31 August 2026) ya kisi aur din ke liye appointment book karna chahenge?",
+      "agent_invoked": "APPOINTMENT",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-29T03:29:44.276Z"
     }
   ],
   "campaigns": [
