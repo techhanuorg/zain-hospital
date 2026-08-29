@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
           : i % 3 === 0 
           ? 'OPD timing kya hai?' 
           : 'Mera blood test report kab milega?';
-        inboundQueueEngine.enqueue(`sim_${Date.now()}_${i}`, dummyPhone, dummyMsg, 'hosp_jain_01');
+        inboundQueueEngine.enqueue(`sim_${Date.now()}_${i}`, dummyPhone, dummyMsg, process.env.DEFAULT_HOSPITAL_ID || 'hosp_zain_01');
       }
       return NextResponse.json({
         success: true,

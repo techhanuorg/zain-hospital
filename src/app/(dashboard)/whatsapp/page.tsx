@@ -37,7 +37,7 @@ export default function WhatsAppConnectPage() {
     status: 'DISCONNECTED',
     connectedNumber: null,
     connectedSince: null,
-    instanceName: 'Jain-CareOS-WhatsApp',
+    instanceName: 'Zain-CareOS-WhatsApp',
     batteryLevel: 0,
     isPlugged: true,
     qrDataUrl: null,
@@ -430,7 +430,7 @@ export default function WhatsAppConnectPage() {
                       </div>
                       <span className="text-sm font-bold text-emerald-300">WhatsApp Active!</span>
                       <span className="text-xs text-white font-mono mt-1 font-semibold">
-                        {session.connectedNumber || 'Jain Hospital Reception'}
+                        {session.connectedNumber || 'Zain Hospital Reception'}
                       </span>
                       <span className="text-[10px] text-slate-400 mt-2">
                         Listening on port & ready for 1 Lakh+ message bursts

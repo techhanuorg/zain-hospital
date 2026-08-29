@@ -32,8 +32,9 @@ export class AIOrchestrator {
   public static async processMessage(
     rawMessage: string,
     userPhone: string,
-    hospitalId: HospitalId = 'hosp_jain_01'
+    hospitalIdInput: HospitalId = 'hosp_zain_01'
   ): Promise<AIResponseOutput> {
+    const hospitalId = hospitalIdInput === 'hosp_jain_01' ? 'hosp_zain_01' : hospitalIdInput;
     // 1. Message Normalizer (typos, Indian colloquialisms)
     const normalizedText = MessageNormalizer.normalize(rawMessage);
 
@@ -79,10 +80,15 @@ export class AIOrchestrator {
       await conversationRepo.create(conversation);
     }
 
-    // Check if conversation is currently assigned to Human Staff
-    if (conversation.status === 'HUMAN_ASSIGNED') {
+    // If conversation was assigned to Human Staff and patient asks for human again, remind them
+    const isExplicitHumanRequest = normalizedText.toLowerCase().includes('reception') || 
+      normalizedText.toLowerCase().includes('human') || 
+      normalizedText.toLowerCase().includes('staff') || 
+      normalizedText.toLowerCase().includes('insan');
+
+    if (conversation.status === 'HUMAN_ASSIGNED' && isExplicitHumanRequest) {
       return {
-        replyText: 'Aapki chat hamare reception staff ko assign ki gayi hai. Kripya thoda intezaar karein 🙏',
+        replyText: 'Aapki chat hamare reception staff ko assign ki gayi hai. Hamari team turant aapse sampark karegi 🙏',
         detectedLanguage,
         intent: 'HUMAN_HANDOFF',
         agent: 'FRONT_DESK',
@@ -90,9 +96,22 @@ export class AIOrchestrator {
         entities: extractedEntities,
         toolCallsExecuted: [],
         shouldHandoffToHuman: true,
-        handoffReason: 'Conversation already in HUMAN_ASSIGNED state'
+        handoffReason: 'Patient requested human staff'
       };
     }
+
+    // 5. Update Conversation Context with Extracted Entities
+    if (!conversation.context_data) conversation.context_data = {};
+    if (extractedEntities.name?.value) {
+      conversation.context_data.patientName = extractedEntities.name.value;
+      conversation.patient_name = extractedEntities.name.value;
+    }
+    if (extractedEntities.age?.value) conversation.context_data.patientAge = extractedEntities.age.value;
+    if (extractedEntities.gender?.value) conversation.context_data.patientGender = extractedEntities.gender.value;
+    if (extractedEntities.doctorName?.value) conversation.context_data.doctorQuery = extractedEntities.doctorName.value;
+    if (extractedEntities.department?.value) conversation.context_data.department = extractedEntities.department.value;
+    if (extractedEntities.targetDate?.value) conversation.context_data.selectedDate = extractedEntities.targetDate.value;
+    if (extractedEntities.slotTime?.value) conversation.context_data.selectedTime = extractedEntities.slotTime.value;
 
     // 5. Low-Literacy Contextual Check
     const lowLiteracyResolution = LowLiteracyHandler.resolveContextualInput(
@@ -118,7 +137,7 @@ export class AIOrchestrator {
     }));
 
     // Build Groq Messages payload
-    const systemContext = `${systemPrompt}\n\nCURRENT CONTEXT:\n- Patient Phone: ${userPhone}\n- Detected Language: ${detectedLanguage}\n- Extracted Name: ${extractedEntities.name?.value || patient?.name || 'Unknown'}\n- Extracted Age: ${extractedEntities.age?.value || patient?.age || 'Unknown'}\n- Extracted Target Date: ${extractedEntities.targetDate?.value || 'Not specified'}\n- Context Step: ${conversation.context_data.step || 'START'}\n- Current Time (IST): ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+    const systemContext = `${systemPrompt}\n\nCURRENT CONTEXT:\n- Patient Phone: ${userPhone}\n- Detected Language: ${detectedLanguage}\n- Known Patient Name: ${conversation.context_data.patientName || patient?.name || 'Unknown'}\n- Known Patient Age: ${conversation.context_data.patientAge || patient?.age || 'Unknown'}\n- Known Patient Gender: ${conversation.context_data.patientGender || patient?.gender || 'Unknown'}\n- Doctor Selected: ${conversation.context_data.selectedDoctorName || conversation.context_data.doctorQuery || 'None'}\n- Target Date: ${conversation.context_data.selectedDate || 'None'}\n- Preferred Time Slot: ${conversation.context_data.selectedTime || 'None'}\n- Context Step: ${conversation.context_data.step || 'START'}\n- Current Time (IST): ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
 
     const groqMessages: GroqMessage[] = [
       { role: 'system', content: systemContext },
@@ -175,6 +194,16 @@ export class AIOrchestrator {
               await conversationRepo.update(conversation);
             }
 
+            if (fnName === 'get_doctors' && execRes.data && execRes.data.length > 0) {
+              conversation.context_data.selectedDoctorId = execRes.data[0].doctor_id;
+              conversation.context_data.selectedDoctorName = execRes.data[0].doctor_name;
+              conversation.context_data.selectedDepartmentId = execRes.data[0].department_id;
+            }
+            if (fnName === 'create_appointment' && execRes.data) {
+              conversation.context_data.confirmedAppointmentId = execRes.data.appointment_id;
+              conversation.context_data.step = 'CONFIRMED';
+            }
+
             // Feed tool execution result back to Groq for natural response synthesis
             groqMessages.push({
               role: 'tool',
@@ -189,15 +218,26 @@ export class AIOrchestrator {
           if (finalReply.includes('<tool_call>') || finalReply.includes('<function=')) {
             finalReply = finalReply.replace(/<tool_call>[\s\S]*?<\/tool_call>/gi, '').trim();
           }
-          if (!finalReply && toolCallsExecuted.length > 0) {
-            // If the model produced empty text after tools, synthesize fallback from tool result
-            const lastResult = toolCallsExecuted[toolCallsExecuted.length - 1];
-            if (lastResult.toolName === 'get_doctors') {
-              const docs = lastResult.result?.data || [];
-              finalReply = `Jain Hospital Bahraich me uplabdh doctors:\n${docs.slice(0, 3).map((d: any, i: number) => `${i + 1}️⃣ ${d.doctor_name} (${d.specialization}) - Fees: ₹${d.consultation_fee}`).join('\n')}\n\nAap kis samay appointment book karna chahenge?`;
-            }
-          }
           break;
+        }
+      }
+
+      if (!finalReply && toolCallsExecuted.length > 0) {
+        // If the model produced empty text after tools, synthesize fallback from tool result
+        const lastResult = toolCallsExecuted[toolCallsExecuted.length - 1];
+        if (lastResult.toolName === 'get_doctors') {
+          const docs = lastResult.result?.data || [];
+          finalReply = `Zain Hospital Bahraich me uplabdh doctors:\n${docs.slice(0, 3).map((d: any, i: number) => `${i + 1}️⃣ ${d.doctor_name} (${d.specialization}) - Fees: ₹${d.consultation_fee}`).join('\n')}\n\nAap kis samay appointment book karna chahenge?`;
+        } else if (lastResult.toolName === 'get_hospital_info') {
+          const h = lastResult.result?.data || {};
+          finalReply = `Namaste! 🙏 *${h.name || 'Zain Hospital & Research Centre'}*\n\n📍 **Address:** ${h.address || 'Hospital Road, Basheerganj, Bahraich'}\n🕒 **OPD Timings:** ${h.opd_timings || '8:30 AM – 7:30 PM'}\n🚨 **24x7 Emergency:** ${h.emergency_phone || '+91 5252 232911'}\n\nKya aapko koi appointment book karni hai ya doctor ki details chahiye?`;
+        } else if (lastResult.toolName === 'get_available_slots') {
+          const slots = lastResult.result?.data?.slots || [];
+          const docName = lastResult.result?.data?.doctor_name || 'Doctor';
+          finalReply = `Dr. ${docName} ke uplabdh time slots:\n${slots.slice(0, 5).map((s: string) => `⏰ ${s}`).join('\n')}\n\nAap kaunsa time slot book karna chahenge?`;
+        } else if (lastResult.toolName === 'create_appointment') {
+          const appt = lastResult.result?.data || {};
+          finalReply = `Appointment Confirmed ✅\n\n🆔 **ID:** ${appt.appointment_id || 'APP-NEW'}\n👨‍⚕️ **Doctor:** ${appt.doctor_name || 'Doctor'}\n📅 **Date:** ${appt.appointment_date}\n⏰ **Time:** ${appt.appointment_time}\n\nZain Hospital me aane ke liye dhanyawad! 🙏`;
         }
       }
     } catch (err: any) {
@@ -213,8 +253,15 @@ export class AIOrchestrator {
     }
 
     if (!finalReply) {
-      finalReply = 'Namaste! Main Jain Hospital Bahraich ka AI digital assistant hoon. Main aapki kya sahayata kar sakta hoon?';
+      finalReply = 'Namaste! Main Zain Hospital Bahraich ka AI digital assistant hoon. Main aapki kya sahayata kar sakta hoon?';
     }
+
+    // Update and persist conversation metadata
+    conversation.last_message_text = rawMessage;
+    conversation.last_message_time = new Date().toISOString();
+    conversation.active_agent = agent;
+    conversation.last_intent = intent;
+    await conversationRepo.update(conversation);
 
     // Save message history
     await conversationRepo.addMessage({
@@ -222,7 +269,7 @@ export class AIOrchestrator {
       conversation_id: conversation.conversation_id,
       hospital_id: hospitalId,
       sender_type: 'PATIENT',
-      sender_name: extractedEntities.name?.value || patient?.name || userPhone,
+      sender_name: extractedEntities.name?.value || conversation.context_data.patientName || patient?.name || userPhone,
       message_type: 'TEXT',
       content: rawMessage,
       intent,
@@ -235,7 +282,7 @@ export class AIOrchestrator {
       conversation_id: conversation.conversation_id,
       hospital_id: hospitalId,
       sender_type: 'AI_AGENT',
-      sender_name: 'Jain Care AI',
+      sender_name: 'Zain Care AI',
       message_type: 'TEXT',
       content: finalReply,
       agent_invoked: agent,
@@ -321,11 +368,11 @@ export class AIOrchestrator {
     if (intent === 'BOOK_APPOINTMENT') {
       const doctors = await doctorRepo.listByHospital(hospitalId);
       const docList = doctors.slice(0, 3).map((d, i) => `${i + 1}️⃣ ${d.doctor_name} (${d.specialization})`).join('\n');
-      return `Bilkul 😊 Jain Hospital Bahraich me appointment ke liye hamare visheshagya doctors:\n\n${docList}\n\nAap kis doctor ya department me dikhana chahte hain?`;
+      return `Bilkul 😊 Zain Hospital Bahraich me appointment ke liye hamare visheshagya doctors:\n\n${docList}\n\nAap kis doctor ya department me dikhana chahte hain?`;
     }
     if (intent === 'EMERGENCY') {
-      return `🚨 *24x7 Emergency Helpline:* +91 5252 232911\n\nJain Hospital, Jain Mandir Road, Basheerganj, Bahraich. Emergency ward 24 ghante khula hai.`;
+      return `🚨 *24x7 Emergency Helpline:* +91 5252 232911\n\nZain Hospital, Hospital Road, Basheerganj, Bahraich. Emergency ward 24 ghante khula hai.`;
     }
-    return `Namaste! Jain Hospital Bahraich me aapka swagat hai. OPD subah 8:30 AM se shaam 7:30 PM tak khula hai. Doctor appointment, timings ya emergency helpline ke liye batayein.`;
+    return `Namaste! Zain Hospital Bahraich me aapka swagat hai. OPD subah 8:30 AM se shaam 7:30 PM tak khula hai. Doctor appointment, timings ya emergency helpline ke liye batayein.`;
   }
 }

@@ -27,7 +27,7 @@ class GroqKeyPoolManager {
   }
 
   private initKeys() {
-    const keyEnvVars = [
+    let keyEnvVars = [
       process.env.GROQ_API_KEY_1,
       process.env.GROQ_API_KEY_2,
       process.env.GROQ_API_KEY_3,
@@ -41,11 +41,27 @@ class GroqKeyPoolManager {
       process.env.GROQ_API_KEY_11,
     ];
 
-    this.keys = keyEnvVars.filter((k): k is string => Boolean(k && k.startsWith('gsk_')));
-    if (this.keys.length === 0) {
-      // Fallback mock key for local testing if env not set
-      this.keys = ['gsk_demo_pool_key_placeholder'];
+    let foundKeys = keyEnvVars.filter((k): k is string => Boolean(k && k.startsWith('gsk_')));
+
+    if (foundKeys.length === 0) {
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const envPath = path.join(process.cwd(), '.env.local');
+        if (fs.existsSync(envPath)) {
+          const envContent = fs.readFileSync(envPath, 'utf-8');
+          const matches = envContent.match(/GROQ_API_KEY_\d+=(gsk_[A-Za-z0-9]+)/g);
+          if (matches) {
+            foundKeys = matches.map((m: string) => m.split('=')[1].trim());
+          }
+        }
+      } catch (e) {
+        // Fallback
+      }
     }
+
+    this.keys = foundKeys.length > 0 ? foundKeys : ['gsk_demo_pool_key_placeholder'];
+
     this.keyStatuses = this.keys.map((k, idx) => ({
       key_index: idx,
       key_hint: `${k.substring(0, 8)}...${k.substring(k.length - 6)}`,
@@ -123,7 +139,7 @@ class GroqKeyPoolManager {
     messages: GroqMessage[],
     options: GroqChatOptions = {}
   ): Promise<{ response: any; keyIndex: number; latencyMs: number }> {
-    const supportedModels = ['qwen/qwen3.8-27b', 'groq/compound', 'openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'groq/compound-mini'];
+    const supportedModels = ['qwen/qwen3.8-27b', 'openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'qwen/qwen3.6-27b'];
     const requestedModel = options.model || 'qwen/qwen3.8-27b';
     const modelsToTry = [requestedModel, ...supportedModels.filter(m => m !== requestedModel)];
     let lastError: any = null;

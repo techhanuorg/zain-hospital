@@ -61,22 +61,23 @@ export class AntiBanEngine {
     'Namaskar 🙏',
     'Hello 😊',
     'Pranam 🙏',
-    'Greetings from Jain Hospital Bahraich 🏥',
+    'Greetings from Zain Hospital Bahraich 🏥',
     'Namaste ji 🙏'
   ];
 
   // Closing Spintax dictionary
   private closingVariants: string[] = [
-    '\n\n— Jain Hospital Bahraich Team',
+    '\n\n— Zain Hospital Bahraich Team',
     '\n\n— CareOS Digital Reception Desk',
-    '\n\n— Jain Hospital Support Desk 🙏',
+    '\n\n— Zain Hospital Support Desk 🙏',
     '\n\n— Aapka Swasthya, Hamari Prathmikta 🏥',
-    '\n\n— Jain Care Team'
+    '\n\n— Zain Care Team'
   ];
 
   constructor() {
     // Hourly reset checker
-    setInterval(() => this.checkResetIntervals(), 60000);
+    const timer = setInterval(() => this.checkResetIntervals(), 60000);
+    if (timer.unref) timer.unref();
   }
 
   private checkResetIntervals() {
@@ -166,7 +167,7 @@ export class AntiBanEngine {
     // If bulk/broadcast, add randomized subtle polite footer or zero-width variations
     if (isBroadcast) {
       const randomClosing = this.closingVariants[Math.floor(Math.random() * this.closingVariants.length)];
-      if (!modified.includes('Jain')) {
+      if (!modified.includes('Zain')) {
         modified += randomClosing;
       }
       // Add subtle micro-timestamp marker at bottom for absolute message uniqueness

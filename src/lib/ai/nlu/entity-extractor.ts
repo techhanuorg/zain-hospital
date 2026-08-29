@@ -69,25 +69,33 @@ export class EntityExtractor {
     }
 
     // 4. Extract Doctor Name
-    const docMatch = text.match(/(?:dr\.?|doctor)\s+([a-zA-Zऀ-ॿ]+(?:\s+[a-zA-Zऀ-ॿ]+)?)/i);
+    const docMatch = text.match(/(?:dr\.?|doctor)\s+([a-zA-Z\u0900-\u097F]+(?:\s+[a-zA-Z\u0900-\u097F]+)?)/i);
+    const nonDocWords = ['kab', 'kya', 'kaha', 'kaise', 'chahiye', 'batao', 'dikhao', 'available', 'hai', 'hain', 'hoga', 'hogi', 'milenge', 'milte', 'kaun', 'list', 'timing', 'fees', 'ko', 'se', 'ki', 'ka', 'ke'];
     if (docMatch) {
+      const candidateDoc = docMatch[1].trim();
+      const words = candidateDoc.toLowerCase().split(/\s+/);
+      const isInvalid = words.some(w => nonDocWords.includes(w));
+      if (!isInvalid && candidateDoc.length > 2) {
+        entities.doctorName = {
+          value: `Dr. ${candidateDoc}`,
+          confidence: 0.90,
+          level: 'HIGH',
+          rawText: docMatch[0]
+        };
+      }
+    }
+    
+    if (!entities.doctorName && /\b(sharma|verma|gupta|mehta|kapoor|singh|rao|khan|tripathi)\b/i.test(text)) {
+      const surname = text.match(/\b(sharma|verma|gupta|mehta|kapoor|singh|rao|khan|tripathi)\b/i)![0];
       entities.doctorName = {
-        value: `Dr. ${docMatch[1]}`,
-        confidence: 0.90,
-        level: 'HIGH',
-        rawText: docMatch[0]
-      };
-    } else if (/(sharma|verma|gupta|mehta|kapoor)/i.test(text)) {
-      const surname = text.match(/(sharma|verma|gupta|mehta|kapoor)/i)![0];
-      entities.doctorName = {
-        value: surname,
-        confidence: 0.75,
-        level: 'MEDIUM'
+        value: `Dr. ${surname.charAt(0).toUpperCase() + surname.slice(1)}`,
+        confidence: 0.85,
+        level: 'HIGH'
       };
     }
 
     // 5. Extract Department
-    if (/(cardio|cardiology|heart|dil)/i.test(text)) {
+    if (/ (cardio|cardiology|heart|dil) /i.test(text)) {
       entities.department = { value: 'Cardiology', confidence: 0.95, level: 'HIGH' };
     } else if (/(ortho|orthopaedics|bone|haddi|joint)/i.test(text)) {
       entities.department = { value: 'Orthopaedics', confidence: 0.95, level: 'HIGH' };

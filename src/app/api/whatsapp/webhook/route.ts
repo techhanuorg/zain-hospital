@@ -6,7 +6,7 @@ import { ModularWhatsAppClient } from '@/lib/whatsapp/client';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const hospitalId = req.headers.get('x-hospital-id') || 'hosp_jain_01';
+    const hospitalId = req.headers.get('x-hospital-id') || process.env.DEFAULT_HOSPITAL_ID || 'hosp_zain_01';
 
     // 1. Extract message details from Evolution API / Baileys format
     const messageId = body.data?.key?.id || body.messageId || `msg_${Date.now()}`;

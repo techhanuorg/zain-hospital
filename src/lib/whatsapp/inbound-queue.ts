@@ -47,10 +47,11 @@ export class InboundQueueEngine {
 
   constructor() {
     // Throughput calculator interval
-    setInterval(() => {
+    const timer = setInterval(() => {
       this.currentThroughput = this.processedInLastSecond;
       this.processedInLastSecond = 0;
     }, 1000);
+    if (timer.unref) timer.unref();
   }
 
   public getMetrics(): InboundMetrics {
@@ -84,7 +85,7 @@ export class InboundQueueEngine {
     messageId: string,
     userPhone: string,
     rawText: string,
-    hospitalId: string = 'hosp_jain_01'
+    hospitalId: string = 'hosp_zain_01'
   ): { status: 'QUEUED' | 'DROPPED_DUPLICATE' | 'DROPPED_OVERFLOW'; jobId?: string } {
     // 1. Ultra-fast Deduplication
     if (messageDeduplicator.isDuplicate(messageId)) {
@@ -201,63 +202,32 @@ export class InboundQueueEngine {
   }
 
   private async processSingleJob(job: InboundJob) {
-    const { userPhone, rawText, hospitalId, messageId } = job;
+    const { userPhone, rawText, hospitalId } = job;
 
-    // 1. Record incoming message into repository
-    let conv = await conversationRepo.getByPhone(hospitalId, userPhone);
-    const convId = conv?.conversation_id || `conv_${Date.now().toString(36)}`;
-
-    await conversationRepo.addMessage({
-      message_id: messageId,
-      conversation_id: convId,
-      hospital_id: hospitalId,
-      sender_type: 'PATIENT',
-      sender_name: conv?.patient_name || userPhone,
-      message_type: 'TEXT',
-      content: rawText,
-      delivery_status: 'DELIVERED',
-      timestamp: new Date().toISOString()
-    });
-
-    // 2. Overload Fast-Path Protection:
+    // Overload Fast-Path Protection:
     // If system is under heavy queue load (> 5,000 pending items), use deterministic fast-reply
     const queueDepth = this.criticalQueue.length + this.standardQueue.length + this.bulkQueue.length;
     let replyText = '';
-    let agentName = 'CareOS AI Reception';
 
     if (queueDepth > 5000 && job.priority !== 'CRITICAL') {
       this.fastPathReplyCount++;
-      replyText = `Namaste! Jain Hospital Bahraich me aapka sandesh mil gaya hai. Hamare digital system dwara aapka anurodh process ho raha hai 🙏`;
+      replyText = `Namaste! Zain Hospital Bahraich me aapka sandesh mil gaya hai. Hamare digital system dwara aapka anurodh process ho raha hai 🙏`;
     } else {
-      // Standard AI Orchestration
+      // Standard AI Orchestration (AIOrchestrator automatically adds both patient & assistant messages to repository)
       const aiResult = await AIOrchestrator.processMessage(rawText, userPhone, hospitalId);
       replyText = aiResult.replyText;
-      agentName = aiResult.agent || 'CareOS AI Reception';
     }
 
-    // 3. Dispatch AI Outbound Reply via Anti-Ban Engine
+    // Dispatch AI Outbound Reply via Anti-Ban Engine
     if (replyText) {
       const priority = job.priority === 'CRITICAL' ? 'HIGH' : 'MEDIUM';
       
-      const sentRes = await antiBanEngine.enqueueMessage(
+      await antiBanEngine.enqueueMessage(
         userPhone,
         replyText,
         priority,
         'AI_REPLY'
       );
-
-      // Record outbound message in conversation
-      await conversationRepo.addMessage({
-        message_id: sentRes.messageId || `reply_${Date.now()}`,
-        conversation_id: convId,
-        hospital_id: hospitalId,
-        sender_type: 'AI_AGENT',
-        sender_name: agentName,
-        message_type: 'TEXT',
-        content: replyText,
-        delivery_status: 'SENT',
-        timestamp: new Date().toISOString()
-      });
     }
   }
 }

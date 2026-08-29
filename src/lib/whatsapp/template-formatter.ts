@@ -15,6 +15,6 @@ export class WhatsAppTemplateFormatter {
       `⏰ *Time:* ${details.time}\n` +
       `🔖 *Appointment ID:* ${details.appointmentId}\n\n` +
       `Kripya 10–15 minutes pehle OPD reception par report karein.\n` +
-      `📍 Jain Hospital, Jain Mandir Road, Basheerganj, Bahraich (U.P.)`;
+      `📍 Zain Hospital, Hospital Road, Basheerganj, Bahraich (U.P.)`;
   }
 }

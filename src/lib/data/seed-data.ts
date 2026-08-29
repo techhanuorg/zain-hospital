@@ -12,18 +12,18 @@ import {
 } from '../types';
 
 export const SEED_HOSPITAL: Hospital = {
-  hospital_id: 'hosp_jain_01',
-  name: 'Jain Hospital & Research Centre',
+  hospital_id: 'hosp_zain_01',
+  name: 'Zain Hospital & Research Centre',
   tagline: 'Leading Multispeciality Hospital in Bahraich with 24x7 Emergency & AI Care',
   phone: '+91 5252 232000',
   emergency_phone: '+91 5252 232911',
   whatsapp_number: '+91 98110 54321',
-  email: 'care@jainhospitalbahraich.com',
-  address: 'Jain Mandir Road, Basheerganj',
+  email: 'care@zainhospitalbahraich.com',
+  address: 'Hospital Road, Basheerganj',
   city: 'Bahraich',
   state: 'Uttar Pradesh',
   pincode: '271801',
-  google_maps_url: 'https://maps.google.com/?q=Jain+Hospital+Bahraich+Uttar+Pradesh',
+  google_maps_url: 'https://maps.google.com/?q=Zain+Hospital+Bahraich+Uttar+Pradesh',
   opd_timings: 'Monday to Saturday: 8:30 AM – 7:30 PM | Sunday: 9:00 AM – 1:00 PM (Emergency 24x7)',
   visiting_hours: 'IPD Visiting: 4:30 PM – 7:00 PM (Max 2 visitors per patient)',
   emergency_available_247: true,
@@ -49,7 +49,7 @@ export const SEED_HOSPITAL: Hospital = {
     },
     {
       question: 'Emergency me kya karein?',
-      answer: 'Emergency ke liye turant hamare 24x7 helpline +91 5252 232911 par call karein ya seedhe Jain Mandir Road, Basheerganj, Bahraich sthit Emergency ward me aayein. Ambulance uplabdh hai.'
+      answer: 'Emergency ke liye turant hamare 24x7 helpline +91 5252 232911 par call karein ya seedhe Hospital Road, Basheerganj, Bahraich sthit Emergency ward me aayein. Ambulance uplabdh hai.'
     },
     {
       question: 'Reports WhatsApp par kaise milengi?',
@@ -68,7 +68,7 @@ export const SEED_HOSPITAL: Hospital = {
 export const SEED_DEPARTMENTS: Department[] = [
   {
     department_id: 'dept_cardio',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Cardiology',
     name_hindi: 'हृदय रोग विभाग (दिल के डॉक्टर)',
     description: 'Comprehensive heart care, Angiography, Angioplasty, Pacemaker, ECG & Echo.',
@@ -79,7 +79,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_ortho',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Orthopaedics',
     name_hindi: 'हड्डी एवं जोड़ रोग विभाग',
     description: 'Joint Replacement, Spine surgery, Fracture care, Arthroscopy & Sports Injuries.',
@@ -90,7 +90,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_genmed',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'General Medicine',
     name_hindi: 'सामान्य चिकित्सा (बुखार, शुगर, बीपी)',
     description: 'Fever, Diabetes, Hypertension, Thyroid, Infections, Preventive checkups.',
@@ -101,7 +101,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_gynae',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Gynaecology & Obstetrics',
     name_hindi: 'स्त्री एवं प्रसूति रोग विभाग',
     description: 'Maternity care, High-risk pregnancy, Infertility, PCOD/PCOS & Laparoscopic surgery.',
@@ -112,7 +112,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_paed',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Paediatrics',
     name_hindi: 'शिशु एवं बाल रोग विभाग',
     description: 'Child growth monitoring, Vaccinations, Neonatal care, Childhood infections.',
@@ -123,7 +123,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_ent',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'ENT (Ear, Nose, Throat)',
     name_hindi: 'कान, नाक एवं गला रोग विभाग',
     description: 'Sinus surgery, Hearing issues, Tonsillectomy, Voice disorders, Vertigo management.',
@@ -134,7 +134,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_derma',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Dermatology',
     name_hindi: 'त्वचा एवं सौंदर्य रोग विभाग',
     description: 'Skin allergies, Acne, Eczema, Psoriasis, Hair fall, Laser treatments.',
@@ -145,7 +145,7 @@ export const SEED_DEPARTMENTS: Department[] = [
   },
   {
     department_id: 'dept_neuro',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Neurology',
     name_hindi: 'मस्तिष्क एवं नस रोग विभाग',
     description: 'Migraine, Stroke, Epilepsy, Neuropathy, Parkinson’s, Memory disorders.',
@@ -159,7 +159,7 @@ export const SEED_DEPARTMENTS: Department[] = [
 export const SEED_DOCTORS: Doctor[] = [
   {
     doctor_id: 'doc_sharma_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     doctor_name: 'Dr. Rahul Sharma',
     specialization: 'Senior Consultant Interventional Cardiologist',
     department_id: 'dept_cardio',
@@ -182,7 +182,7 @@ export const SEED_DOCTORS: Doctor[] = [
   },
   {
     doctor_id: 'doc_verma_02',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     doctor_name: 'Dr. Priya Verma',
     specialization: 'Associate Consultant Cardiologist',
     department_id: 'dept_cardio',
@@ -205,7 +205,7 @@ export const SEED_DOCTORS: Doctor[] = [
   },
   {
     doctor_id: 'doc_gupta_03',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     doctor_name: 'Dr. Anil Gupta',
     specialization: 'Chief Orthopaedic & Robotic Joint Surgeon',
     department_id: 'dept_ortho',
@@ -228,7 +228,7 @@ export const SEED_DOCTORS: Doctor[] = [
   },
   {
     doctor_id: 'doc_mehta_04',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     doctor_name: 'Dr. Sunita Mehta',
     specialization: 'Senior Consultant Gynaecologist & Obstetrician',
     department_id: 'dept_gynae',
@@ -251,7 +251,7 @@ export const SEED_DOCTORS: Doctor[] = [
   },
   {
     doctor_id: 'doc_kapoor_05',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     doctor_name: 'Dr. Rajesh Kapoor',
     specialization: 'Senior Consultant Physician & Diabetologist',
     department_id: 'dept_genmed',
@@ -277,7 +277,7 @@ export const SEED_DOCTORS: Doctor[] = [
 export const SEED_PATIENTS: Patient[] = [
   {
     patient_id: 'pat_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     whatsapp_number: '+919876543210',
     name: 'Ramesh Singh',
     gender: 'Male',
@@ -301,7 +301,7 @@ export const SEED_PATIENTS: Patient[] = [
   },
   {
     patient_id: 'pat_sunita_02',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     whatsapp_number: '+919811122233',
     name: 'Sunita Devi',
     gender: 'Female',
@@ -326,7 +326,7 @@ export const SEED_PATIENTS: Patient[] = [
 export const SEED_APPOINTMENTS: Appointment[] = [
   {
     appointment_id: 'APP-98421',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     patient_id: 'pat_ramesh_01',
     doctor_id: 'doc_sharma_01',
     department_id: 'dept_cardio',
@@ -347,7 +347,7 @@ export const SEED_APPOINTMENTS: Appointment[] = [
   },
   {
     appointment_id: 'APP-98310',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     patient_id: 'pat_sunita_02',
     doctor_id: 'doc_mehta_04',
     department_id: 'dept_gynae',
@@ -368,7 +368,7 @@ export const SEED_APPOINTMENTS: Appointment[] = [
   },
   {
     appointment_id: 'APP-98104',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     patient_id: 'pat_ramesh_01',
     doctor_id: 'doc_kapoor_05',
     department_id: 'dept_genmed',
@@ -390,7 +390,7 @@ export const SEED_APPOINTMENTS: Appointment[] = [
 export const SEED_FOLLOWUPS: Followup[] = [
   {
     followup_id: 'fol_med_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     patient_id: 'pat_ramesh_01',
     appointment_id: 'APP-98421',
     type: 'MEDICINE_REMINDER',
@@ -411,7 +411,7 @@ export const SEED_FOLLOWUPS: Followup[] = [
   },
   {
     followup_id: 'fol_missed_02',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     patient_id: 'pat_ramesh_01',
     appointment_id: 'APP-98104',
     type: 'MISSED_APPOINTMENT',
@@ -430,7 +430,7 @@ export const SEED_FOLLOWUPS: Followup[] = [
 export const SEED_CONVERSATIONS: Conversation[] = [
   {
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     patient_id: 'pat_ramesh_01',
     whatsapp_number: '+919876543210',
     patient_name: 'Ramesh Singh',
@@ -457,7 +457,7 @@ export const SEED_MESSAGES: Message[] = [
   {
     message_id: 'msg_001',
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     sender_type: 'PATIENT',
     sender_name: 'Ramesh Singh',
     message_type: 'TEXT',
@@ -469,9 +469,9 @@ export const SEED_MESSAGES: Message[] = [
   {
     message_id: 'msg_002',
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     sender_type: 'AI_AGENT',
-    sender_name: 'Jain AI Front Desk',
+    sender_name: 'Zain AI Front Desk',
     message_type: 'TEXT',
     content: 'Namaste Ramesh ji! 😊 Aap kis department ya doctor se appointment lena chahte hain?\n\n1️⃣ Cardiology (दिल)\n2️⃣ Orthopaedics (हड्डी)\n3️⃣ General Medicine (बुखार/BP)\n4️⃣ Other',
     agent_invoked: 'APPOINTMENT',
@@ -484,7 +484,7 @@ export const SEED_MESSAGES: Message[] = [
   {
     message_id: 'msg_003',
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     sender_type: 'PATIENT',
     sender_name: 'Ramesh Singh',
     message_type: 'TEXT',
@@ -496,9 +496,9 @@ export const SEED_MESSAGES: Message[] = [
   {
     message_id: 'msg_004',
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     sender_type: 'AI_AGENT',
-    sender_name: 'Jain AI Appointment Desk',
+    sender_name: 'Zain AI Appointment Desk',
     message_type: 'TEXT',
     content: 'Dr. Rahul Sharma ke kal shaam ke available slots:\n\n⏰ 5:30 PM\n⏰ 6:00 PM\n⏰ 6:30 PM\n\nKaunsa time book karu aapke liye?',
     agent_invoked: 'APPOINTMENT',
@@ -511,7 +511,7 @@ export const SEED_MESSAGES: Message[] = [
   {
     message_id: 'msg_005',
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     sender_type: 'PATIENT',
     sender_name: 'Ramesh Singh',
     message_type: 'TEXT',
@@ -523,9 +523,9 @@ export const SEED_MESSAGES: Message[] = [
   {
     message_id: 'msg_006',
     conversation_id: 'conv_ramesh_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     sender_type: 'AI_AGENT',
-    sender_name: 'Jain AI Appointment Desk',
+    sender_name: 'Zain AI Appointment Desk',
     message_type: 'TEXT',
     content: 'Appointment Confirmed ✅\n\n👤 Patient: Ramesh Singh\n👨‍⚕️ Doctor: Dr. Rahul Sharma\n🏥 Department: Cardiology\n📅 Date: 27 Aug 2026\n⏰ Time: 6:00 PM\n🔖 Appointment ID: APP-98421\n\nKripya 10-15 minute pehle OPD reception par report karein. Dhanyawad!',
     agent_invoked: 'APPOINTMENT',
@@ -540,11 +540,11 @@ export const SEED_MESSAGES: Message[] = [
 export const SEED_CAMPAIGNS: Campaign[] = [
   {
     campaign_id: 'camp_diabetic_01',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     name: 'Free HbA1c & Cardiac Screening Camp',
     type: 'HEALTH_CHECKUP',
     target_audience: 'DIABETIC_PATIENTS',
-    message_template: 'Namaste {{name}} ji! 🏥 Jain Hospital me is Somvar (31 Aug) ko Free Diabetes & Heart Checkup Camp aayojit kiya ja raha hai. Kya aap apna slot register karna chahenge?\n\n1️⃣ Haan, slot book karein\n2️⃣ Baad me',
+    message_template: 'Namaste {{name}} ji! 🏥 Zain Hospital me is Somvar (31 Aug) ko Free Diabetes & Heart Checkup Camp aayojit kiya ja raha hai. Kya aap apna slot register karna chahenge?\n\n1️⃣ Haan, slot book karein\n2️⃣ Baad me',
     scheduled_at: '2026-08-29T09:00:00Z',
     status: 'SCHEDULED',
     total_recipients: 450,
@@ -560,9 +560,9 @@ export const SEED_CAMPAIGNS: Campaign[] = [
 export const SEED_AUDIT_LOGS: AuditLog[] = [
   {
     log_id: 'aud_001',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     user_id: 'sys_ai_agent',
-    user_name: 'Jain AI Orchestrator',
+    user_name: 'Zain AI Orchestrator',
     action: 'CREATE_APPOINTMENT',
     entity_type: 'APPOINTMENT',
     entity_id: 'APP-98421',
@@ -572,9 +572,9 @@ export const SEED_AUDIT_LOGS: AuditLog[] = [
   },
   {
     log_id: 'aud_002',
-    hospital_id: 'hosp_jain_01',
+    hospital_id: 'hosp_zain_01',
     user_id: 'sys_ai_agent',
-    user_name: 'Jain AI Orchestrator',
+    user_name: 'Zain AI Orchestrator',
     action: 'EXECUTE_TOOL',
     entity_type: 'TOOL',
     entity_id: 'create_appointment',

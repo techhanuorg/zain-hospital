@@ -2,10 +2,10 @@ import { WhatsAppSessionStatus } from '../types';
 
 class WhatsAppSessionManager {
   private status: WhatsAppSessionStatus = 'CONNECTED';
-  private qrCode: string = '2@CareOS_MockQR_JainHospital_2026_LiveSessionKey_9811054321';
+  private qrCode: string = '2@CareOS_MockQR_ZainHospital_2026_LiveSessionKey_9811054321';
   private connectedNumber: string = '+91 98110 54321';
   private connectedSince: string = '2026-08-26T08:00:00Z';
-  private instanceName: string = 'Jain-Hospital-Main';
+  private instanceName: string = 'Zain-Hospital-Main';
 
   public getSessionInfo() {
     return {
@@ -26,7 +26,7 @@ class WhatsAppSessionManager {
 
   public refreshQR(): string {
     this.status = 'QR_REQUIRED';
-    this.qrCode = `2@CareOS_QR_${Date.now()}_Jain_Refreshed`;
+    this.qrCode = `2@CareOS_QR_${Date.now()}_Zain_Refreshed`;
     return this.qrCode;
   }
 

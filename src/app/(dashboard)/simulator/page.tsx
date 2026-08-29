@@ -46,7 +46,7 @@ export default function WhatsAppSimulatorPage() {
     {
       id: '1',
       sender: 'AI',
-      text: 'Namaste! 🙏 Main Jain Hospital Bahraich ka AI digital assistant hoon.\n\nMain aapki appointment booking, doctor timings, ya hospital ki kisi bhi jankari me sahayata kar sakta hoon. Batayein, main aapki kya madad karoon?',
+      text: 'Namaste! 🙏 Main Zain Hospital Bahraich ka AI digital assistant hoon.\n\nMain aapki appointment booking, doctor timings, ya hospital ki kisi bhi jankari me sahayata kar sakta hoon. Batayein, main aapki kya madad karoon?',
       timestamp: '10:00 AM'
     }
   ]);
@@ -102,7 +102,7 @@ export default function WhatsAppSimulatorPage() {
       {
         id: '1',
         sender: 'AI',
-        text: 'Namaste! 🙏 Main Jain Hospital Bahraich ka AI digital assistant hoon. Main aapki kya sahayata kar sakta hoon?',
+        text: 'Namaste! 🙏 Main Zain Hospital Bahraich ka AI digital assistant hoon. Main aapki kya sahayata kar sakta hoon?',
         timestamp: '10:00 AM'
       }
     ]);
@@ -139,7 +139,7 @@ export default function WhatsAppSimulatorPage() {
                 🏥
               </div>
               <div>
-                <div className="font-bold text-sm">Jain Hospital Bahraich</div>
+                <div className="font-bold text-sm">Zain Hospital Bahraich</div>
                 <div className="text-[11px] text-teal-200 flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                   Verified Hospital Desk (AI Active)

@@ -64,7 +64,7 @@ export class BaileysManager {
   private pairingCode: string | null = null;
   private connectedNumber: string | null = null;
   private connectedSince: string | null = null;
-  private instanceName: string = 'Jain-CareOS-WhatsApp';
+  private instanceName: string = 'Zain-CareOS-WhatsApp';
   private isInitializing: boolean = false;
   private reconnectTimeout: NodeJS.Timeout | null = null;
   private lastPing: string = new Date().toISOString();
@@ -256,7 +256,7 @@ export class BaileysManager {
           // Strip device ID (e.g. 919876543210:1@s.whatsapp.net -> 919876543210)
           const rawPhone = remoteJid.split('@')[0].split(':')[0].replace(/[^0-9]/g, '');
           const userPhone = rawPhone.startsWith('+') ? rawPhone : `+${rawPhone}`;
-          const hospitalId = 'hosp_jain_01';
+          const hospitalId = process.env.DEFAULT_HOSPITAL_ID || 'hosp_zain_01';
 
           console.log(`[Baileys] 📥 Incoming message from ${userPhone}: "${messageText}"`);
 
