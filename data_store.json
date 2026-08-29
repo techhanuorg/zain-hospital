@@ -484,6 +484,26 @@
   ],
   "conversations": [
     {
+      "conversation_id": "conv_mtdu9isg",
+      "hospital_id": "hosp_zain_01",
+      "whatsapp_number": "919123456789",
+      "status": "ACTIVE",
+      "active_agent": "APPOINTMENT",
+      "detected_language": "hinglish",
+      "context_data": {
+        "doctorQuery": "Dr. Rahul Sharma",
+        "selectedDoctorId": "doc_sharma_01",
+        "selectedDoctorName": "Dr. Rahul Sharma",
+        "selectedDepartmentId": "dept_cardio"
+      },
+      "unread_count": 0,
+      "last_message_text": "Dr. Rahul Sharma ki details yeh hain:\n\n👨‍⚕️ **Dr. Rahul Sharma**\n- **Specialization:** Senior Consultant Interventional Cardiologist\n- **Qualification:** MD, DM (Cardiology) AIIMS New Delhi, FACC (USA)\n- **Experience:** 18 saal\n- **Consultation Fee:** ₹1,000\n- **Working Days:** Monday – Saturday\n- **Timings:** 9:00 AM – 7:00 PM (Break: 1:00 PM – 2:30 PM)\n\nAb aap bataiye — **kaunsi date** par appointment chahiye? (e.g. aaj, kal, 31 August)\n\nMain us date ke liye available slots check karke dikhata hoon. 📅",
+      "last_message_time": "2026-08-29T03:46:35.851Z",
+      "created_at": "2026-08-29T03:46:30.880Z",
+      "updated_at": "2026-08-29T03:46:35.851Z",
+      "last_intent": "BOOK_APPOINTMENT"
+    },
+    {
       "conversation_id": "conv_mtdqi3w2",
       "hospital_id": "hosp_zain_01",
       "whatsapp_number": "+919988776655",
@@ -615,9 +635,9 @@
       "whatsapp_number": "+919876543210",
       "patient_name": "Ramesh Singh",
       "status": "ACTIVE",
-      "active_agent": "APPOINTMENT",
+      "active_agent": "FRONT_DESK",
       "detected_language": "hinglish",
-      "last_intent": "BOOK_APPOINTMENT",
+      "last_intent": "EMERGENCY",
       "context_data": {
         "selectedDoctorId": "doc_sharma_01",
         "selectedDepartmentId": "dept_cardio",
@@ -626,10 +646,10 @@
         "step": "CONFIRMED"
       },
       "unread_count": 0,
-      "last_message_text": "Namaste Ramesh ji! 🙏\n\nZain Hospital me **Orthopaedics** department me yeh doctors available hain:\n\n| 👨‍⚕️ Doctor | Qualification | OPD Timing |\n|---|---|---|\n| **Dr. Anil Verma** | MBBS, MS (Ortho) | Mon–Sat, 10:00 AM – 2:00 PM |\n| **Dr. Sunita Rao** | MBBS, MS (Ortho) | Mon–Sat, 11:00 AM – 3:00 PM |\n\n📅 **Aaj (29 Aug 2026, Friday)** dono doctors milenge:\n- **Dr. Anil Verma** → 10:00 AM – 2:00 PM\n- **Dr. Sunita Rao** → 11:00 AM – 3:00 PM\n\n---\n\nKya aap inme se kisi ek se **appointment** book karna chahenge? Agar haan, to batayein:\n- Kaunsa doctor? (Anil Verma / Sunita Rao)\n- Kaunsa time? (subah / dopahar)\n\nMain turant available slots check karke aapko bata dunga! 😊",
-      "last_message_time": "2026-08-29T01:57:28.494Z",
+      "last_message_text": "Namaste Ramesh ji! 🙏\n\n**Zain Hospital & Research Centre** ki OPD timings aur emergency number yeh hai:\n\n🏥 **OPD Timings:**\n- **Monday – Saturday:** 8:30 AM – 7:30 PM\n- **Sunday:** 9:00 AM – 1:00 PM\n\n🚑 **Emergency (24×7):**\n- **Helpline:** **+91 5252 232911**\n- Emergency ward me seedhe aayein: **Hospital Road, Basheerganj, Bahraich – 271801**\n- **Ambulance** bhi 24×7 available hai.\n\n📞 **General Hospital Number:** +91 5252 232000\n💬 **WhatsApp:** +91 98110 54321\n\n---\n\nKya aapko kisi **doctor se appointment** book karwana hai? Bas doctor ka naam ya department (jaise Orthopaedics, Cardiology, General Medicine) likh kar bhej dijiye, main turant available slots dikhata hoon! 😊",
+      "last_message_time": "2026-08-29T03:45:57.665Z",
       "created_at": "2026-08-25T14:20:00Z",
-      "updated_at": "2026-08-29T01:57:28.494Z"
+      "updated_at": "2026-08-29T03:45:57.665Z"
     }
   ],
   "messages": [
@@ -1433,6 +1453,54 @@
       "agent_invoked": "APPOINTMENT",
       "delivery_status": "SENT",
       "timestamp": "2026-08-29T03:29:44.276Z"
+    },
+    {
+      "message_id": "msg_u_1787975157660",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_zain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "Ramesh Singh",
+      "message_type": "TEXT",
+      "content": "Hospital ka OPD timing aur emergency number kya hai?",
+      "intent": "EMERGENCY",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-29T03:45:57.660Z"
+    },
+    {
+      "message_id": "msg_a_1787975157666",
+      "conversation_id": "conv_ramesh_01",
+      "hospital_id": "hosp_zain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Zain Care AI",
+      "message_type": "TEXT",
+      "content": "Namaste Ramesh ji! 🙏\n\n**Zain Hospital & Research Centre** ki OPD timings aur emergency number yeh hai:\n\n🏥 **OPD Timings:**\n- **Monday – Saturday:** 8:30 AM – 7:30 PM\n- **Sunday:** 9:00 AM – 1:00 PM\n\n🚑 **Emergency (24×7):**\n- **Helpline:** **+91 5252 232911**\n- Emergency ward me seedhe aayein: **Hospital Road, Basheerganj, Bahraich – 271801**\n- **Ambulance** bhi 24×7 available hai.\n\n📞 **General Hospital Number:** +91 5252 232000\n💬 **WhatsApp:** +91 98110 54321\n\n---\n\nKya aapko kisi **doctor se appointment** book karwana hai? Bas doctor ka naam ya department (jaise Orthopaedics, Cardiology, General Medicine) likh kar bhej dijiye, main turant available slots dikhata hoon! 😊",
+      "agent_invoked": "FRONT_DESK",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-29T03:45:57.665Z"
+    },
+    {
+      "message_id": "msg_u_1787975195846",
+      "conversation_id": "conv_mtdu9isg",
+      "hospital_id": "hosp_zain_01",
+      "sender_type": "PATIENT",
+      "sender_name": "919123456789",
+      "message_type": "TEXT",
+      "content": "Doctor Rahul Sharma ki fees kitni hai aur appointment kab milega?",
+      "intent": "BOOK_APPOINTMENT",
+      "delivery_status": "READ",
+      "timestamp": "2026-08-29T03:46:35.846Z"
+    },
+    {
+      "message_id": "msg_a_1787975195852",
+      "conversation_id": "conv_mtdu9isg",
+      "hospital_id": "hosp_zain_01",
+      "sender_type": "AI_AGENT",
+      "sender_name": "Zain Care AI",
+      "message_type": "TEXT",
+      "content": "Dr. Rahul Sharma ki details yeh hain:\n\n👨‍⚕️ **Dr. Rahul Sharma**\n- **Specialization:** Senior Consultant Interventional Cardiologist\n- **Qualification:** MD, DM (Cardiology) AIIMS New Delhi, FACC (USA)\n- **Experience:** 18 saal\n- **Consultation Fee:** ₹1,000\n- **Working Days:** Monday – Saturday\n- **Timings:** 9:00 AM – 7:00 PM (Break: 1:00 PM – 2:30 PM)\n\nAb aap bataiye — **kaunsi date** par appointment chahiye? (e.g. aaj, kal, 31 August)\n\nMain us date ke liye available slots check karke dikhata hoon. 📅",
+      "agent_invoked": "APPOINTMENT",
+      "delivery_status": "SENT",
+      "timestamp": "2026-08-29T03:46:35.851Z"
     }
   ],
   "campaigns": [
